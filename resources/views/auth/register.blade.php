@@ -1,59 +1,51 @@
 <x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+    <!-- Validation Errors -->
+    <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+    <form method="POST" action="{{ route('register') }}">
+        @csrf
 
-        <form method="POST" action="{{ route('register') }}">
-            @csrf
+        <!-- Name -->
+        <div class="form-group">
+            <label for="name" class="form-label">{{ __('Full Name') }}</label>
+            <input id="name" class="form-input" type="text" name="name" :value="old('name')" required autofocus placeholder="John Doe" />
+        </div>
 
-            <!-- Name -->
-            <div>
-                <x-label for="name" :value="__('Name')" />
+        <!-- Email Address -->
+        <div class="form-group">
+            <label for="email" class="form-label">{{ __('Email Address') }}</label>
+            <input id="email" class="form-input" type="email" name="email" :value="old('email')" required placeholder="name@example.com" />
+        </div>
 
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
-            </div>
+        <!-- Password -->
+        <div class="form-group">
+            <label for="password" class="form-label">{{ __('Password') }}</label>
+            <input id="password" class="form-input"
+                            type="password"
+                            name="password"
+                            required autocomplete="new-password" 
+                            placeholder="••••••••" />
+        </div>
 
-            <!-- Email Address -->
-            <div class="mt-4">
-                <x-label for="email" :value="__('Email')" />
+        <!-- Confirm Password -->
+        <div class="form-group">
+            <label for="password_confirmation" class="form-label">{{ __('Confirm Password') }}</label>
+            <input id="password_confirmation" class="form-input"
+                            type="password"
+                            name="password_confirmation" required 
+                            placeholder="••••••••" />
+        </div>
 
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
-            </div>
+        <div style="margin-top: 30px;">
+            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 14px;">
+                {{ __('Create Account') }}
+            </button>
+        </div>
+    </form>
 
-            <!-- Password -->
-            <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
-
-                <x-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="new-password" />
-            </div>
-
-            <!-- Confirm Password -->
-            <div class="mt-4">
-                <x-label for="password_confirmation" :value="__('Confirm Password')" />
-
-                <x-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
-                </a>
-
-                <x-button class="ml-4">
-                    {{ __('Register') }}
-                </x-button>
-            </div>
-        </form>
-    </x-auth-card>
+    <div class="auth-footer">
+        {{ __('Already registered?') }} 
+        <a href="{{ route('login') }}">{{ __('Login Now') }}</a>
+    </div>
 </x-guest-layout>
+

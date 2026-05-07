@@ -24,11 +24,11 @@
                 <div class="container">
                     <div style="display: flex; align-items: center; gap: 50px; flex-wrap: wrap;">
                         <div style="flex: 1; min-width: 300px; z-index: 2;">
-                            <span style="display: inline-block; padding: 6px 15px; background: rgba(99, 102, 241, 0.1); border: 1px solid var(--primary-color); color: var(--primary-color); border-radius: 50px; font-weight: 700; font-size: 0.8rem; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px;">
+                            <span style="display: inline-block; padding: 6px 15px; background: rgba(212, 175, 55, 0.1); border: 1px solid var(--primary-color); color: var(--primary-color); border-radius: 50px; font-weight: 700; font-size: 0.8rem; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px;">
                                 The Future of Custom Apparel
                             </span>
                             <h1 style="font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.1; margin-bottom: 25px; font-weight: 900; color: #fff;">
-                                Print Your <span style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 20px rgba(99, 102, 241, 0.3);">Imagination</span> in High-Def
+                                Print Your <span style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);">Imagination</span> in High-Def
                             </h1>
                             <p style="font-size: 1.1rem; color: var(--text-light); margin-bottom: 40px; max-width: 500px;">
                                 Experience the next level of customization. Tunicart combines premium fabric technology with advanced digital printing to bring your vision to life.
@@ -40,7 +40,7 @@
                         </div>
                         <div style="flex: 1; min-width: 300px; position: relative;">
                             <div style="position: absolute; inset: 0; background: radial-gradient(circle, var(--primary-color) 0%, transparent 70%); filter: blur(60px); opacity: 0.2; transform: scale(1.2);"></div>
-                            <img src="{{ asset('images/hero-hitech.png') }}" alt="High-Tech Customization" style="width: 100%; filter: drop-shadow(0 0 30px rgba(99, 102, 241, 0.3)); animation: float 6s ease-in-out infinite;">
+                            <img src="{{ asset('images/hero-hitech.png') }}" alt="High-Tech Customization" style="width: 100%; filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.4)) sepia(1) hue-rotate(-15deg) saturate(2); animation: float 6s ease-in-out infinite;">
                         </div>
                     </div>
                 </div>
@@ -64,27 +64,27 @@
             </div>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
                 <!-- Feature 1 -->
-                <div class="glass" style="padding: 40px; border-radius: 30px; position: relative; overflow: hidden; transition: var(--transition); border: 1px solid rgba(99, 102, 241, 0.2);">
+                <div class="glass" style="padding: 40px; border-radius: 30px; position: relative; overflow: hidden; transition: var(--transition); border: 1px solid rgba(212, 175, 55, 0.2);">
                     <span style="position: absolute; top: 10px; right: 20px; font-size: 4rem; font-weight: 900; color: rgba(255,255,255,0.03); z-index: 0;">01</span>
-                    <div style="width: 60px; height: 60px; background: rgba(99, 102, 241, 0.15); border-radius: 18px; display: flex; align-items: center; justify-content: center; margin-bottom: 25px; color: var(--primary-color); font-size: 1.8rem; box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);">
+                    <div style="width: 60px; height: 60px; background: rgba(212, 175, 55, 0.15); border-radius: 18px; display: flex; align-items: center; justify-content: center; margin-bottom: 25px; color: var(--primary-color); font-size: 1.8rem; box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);">
                         <i class="fa-solid fa-microchip"></i>
                     </div>
                     <h3 style="font-size: 1.4rem; margin-bottom: 15px; font-weight: 800; color: #fff;">HD Print Matrix</h3>
                     <p style="font-size: 1rem; color: var(--text-light); line-height: 1.6; position: relative; z-index: 1;">Industrial-grade molecular bonding ensures your designs never fade, peel, or crack, wash after wash.</p>
                 </div>
                 <!-- Feature 2 -->
-                <div class="glass" style="padding: 40px; border-radius: 30px; position: relative; overflow: hidden; transition: var(--transition); border: 1px solid rgba(6, 182, 212, 0.2);">
+                <div class="glass" style="padding: 40px; border-radius: 30px; position: relative; overflow: hidden; transition: var(--transition); border: 1px solid rgba(225, 198, 153, 0.2);">
                     <span style="position: absolute; top: 10px; right: 20px; font-size: 4rem; font-weight: 900; color: rgba(255,255,255,0.03); z-index: 0;">02</span>
-                    <div style="width: 60px; height: 60px; background: rgba(6, 182, 212, 0.15); border-radius: 18px; display: flex; align-items: center; justify-content: center; margin-bottom: 25px; color: var(--secondary-color); font-size: 1.8rem; box-shadow: 0 0 20px rgba(6, 182, 212, 0.2);">
+                    <div style="width: 60px; height: 60px; background: rgba(225, 198, 153, 0.15); border-radius: 18px; display: flex; align-items: center; justify-content: center; margin-bottom: 25px; color: var(--secondary-color); font-size: 1.8rem; box-shadow: 0 0 20px rgba(225, 198, 153, 0.2);">
                         <i class="fa-solid fa-leaf"></i>
                     </div>
                     <h3 style="font-size: 1.4rem; margin-bottom: 15px; font-weight: 800; color: #fff;">Premium Cotton</h3>
                     <p style="font-size: 1rem; color: var(--text-light); line-height: 1.6; position: relative; z-index: 1;">100% sustainable, pre-shrunk cotton that's bio-washed for an ultra-soft, luxury skin-feel.</p>
                 </div>
                 <!-- Feature 3 -->
-                <div class="glass" style="padding: 40px; border-radius: 30px; position: relative; overflow: hidden; transition: var(--transition); border: 1px solid rgba(244, 114, 182, 0.2);">
+                <div class="glass" style="padding: 40px; border-radius: 30px; position: relative; overflow: hidden; transition: var(--transition); border: 1px solid rgba(205, 127, 50, 0.2);">
                     <span style="position: absolute; top: 10px; right: 20px; font-size: 4rem; font-weight: 900; color: rgba(255,255,255,0.03); z-index: 0;">03</span>
-                    <div style="width: 60px; height: 60px; background: rgba(244, 114, 182, 0.15); border-radius: 18px; display: flex; align-items: center; justify-content: center; margin-bottom: 25px; color: var(--accent-color); font-size: 1.8rem; box-shadow: 0 0 20px rgba(244, 114, 182, 0.2);">
+                    <div style="width: 60px; height: 60px; background: rgba(205, 127, 50, 0.15); border-radius: 18px; display: flex; align-items: center; justify-content: center; margin-bottom: 25px; color: var(--accent-color); font-size: 1.8rem; box-shadow: 0 0 20px rgba(205, 127, 50, 0.2);">
                         <i class="fa-solid fa-truck-fast"></i>
                     </div>
                     <h3 style="font-size: 1.4rem; margin-bottom: 15px; font-weight: 800; color: #fff;">Priority Dispatch</h3>
@@ -175,9 +175,9 @@
 
     <!-- Special Promo Section (Hi-Tech Redesign) -->
     <section class="section reveal" style="padding: 100px 0; background: var(--bg-color); position: relative; overflow: hidden;">
-        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; height: 100%; background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);"></div>
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; height: 100%; background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%);"></div>
         <div class="container">
-            <div class="glass" style="padding: 80px 40px; border-radius: 40px; border: 2px solid var(--primary-color); position: relative; text-align: center; box-shadow: 0 0 50px rgba(99, 102, 241, 0.2);">
+            <div class="glass" style="padding: 80px 40px; border-radius: 40px; border: 2px solid var(--primary-color); position: relative; text-align: center; box-shadow: 0 0 50px rgba(212, 175, 55, 0.2);">
                 <div style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); background: var(--primary-color); color: #fff; padding: 5px 25px; border-radius: 50px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; font-size: 0.8rem;">
                     Limited Time Phase
                 </div>
@@ -205,20 +205,20 @@
             </div>
             <div class="bento-grid">
                 <div class="bento-item large" onclick="window.location.href='{{ route('products.index') }}'">
-                    <img src="https://images.unsplash.com/photo-1554568218-0f1715e72254?auto=format&fit=crop&w=800&q=80" alt="Street Edit">
+                    <img src="https://images.unsplash.com/photo-1558191053-8edcb01e1da3?auto=format&fit=crop&w=800&q=80" alt="Street Edit">
                     <div class="bento-overlay">
                         <h3>The Street Edit</h3>
                         <p>Oversized & Bold</p>
                     </div>
                 </div>
                 <div class="bento-item wide" onclick="window.location.href='{{ route('products.index') }}'">
-                    <img src="https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?auto=format&fit=crop&w=800&q=80" alt="Corporate Polos">
+                    <img src="https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?auto=format&fit=crop&w=800&q=80" alt="Corporate Polos">
                     <div class="bento-overlay center">
                         <h3>Corporate Polos</h3>
                     </div>
                 </div>
                 <div class="bento-item small" onclick="window.location.href='{{ route('products.index') }}'">
-                    <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=400&q=80" alt="Graphic Tees">
+                    <img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80" alt="Graphic Tees">
                     <div class="bento-overlay center">
                         <h4>Graphic Tees</h4>
                     </div>

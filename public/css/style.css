@@ -1,29 +1,31 @@
 :root {
-    --primary-color: #6366f1;
-    /* Electric Indigo */
-    --primary-dark: #4f46e5;
-    --secondary-color: #06b6d4;
-    /* Neon Cyan */
-    --accent-color: #f472b6;
-    /* Cyber Pink */
+    --primary-color: #d4af37;
+    /* Sophisticated Gold */
+    --primary-dark: #b8860b;
+    /* Dark Gold */
+    --secondary-color: #e1c699;
+    /* Champagne Gold */
+    --accent-color: #cd7f32;
+    /* Bronze Accent */
     --text-color: #f8fafc;
-    --text-light: #94a3b8;
-    --bg-color: #020617;
-    /* Deep Space Black */
-    --bg-alt: #0f172a;
+    --text-light: #a8a29e;
+    --bg-color: #0c0a09;
+    /* Near Black Espresso */
+    --bg-alt: #1c1917;
+    /* Deep Espresso from Logo */
     --white: #ffffff;
     --black: #000000;
-    --glass: rgba(15, 23, 42, 0.8);
-    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass: rgba(28, 25, 23, 0.8);
+    --glass-border: rgba(212, 175, 55, 0.15);
     --container-width: 1200px;
     --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-    --shadow: 0 0 20px rgba(99, 102, 241, 0.15);
-    --shadow-lg: 0 0 50px rgba(99, 102, 241, 0.3);
+    --shadow: 0 0 20px rgba(212, 175, 55, 0.15);
+    --shadow-lg: 0 0 50px rgba(212, 175, 55, 0.3);
 }
 
 /* Glassmorphism Utility */
 .glass {
-    background: var(--glass);
+    background: rgba(28, 25, 23, 0.65);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--glass-border);
@@ -40,8 +42,8 @@ body {
     color: var(--text-color);
     background-color: var(--bg-color);
     background-image:
-        radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.05) 0%, transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.05) 0%, transparent 40%);
+        radial-gradient(circle at 10% 20%, rgba(212, 175, 55, 0.03) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(225, 198, 153, 0.03) 0%, transparent 40%);
     line-height: 1.6;
     overflow-x: hidden;
 }
@@ -169,13 +171,14 @@ nav {
 .btn-primary {
     background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
     color: var(--white);
-    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .btn-primary:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.5);
-    filter: brightness(1.1);
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.6);
+    filter: brightness(1.2);
 }
 
 /* Hero Section */
@@ -274,8 +277,9 @@ nav {
 }
 
 .product-card {
-    background: var(--white);
-    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
     overflow: hidden;
     box-shadow: var(--shadow);
     transition: var(--transition);
@@ -283,7 +287,8 @@ nav {
 
 .product-card:hover {
     transform: translateY(-10px);
-    box-shadow: var(--shadow-lg);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    border-color: var(--primary-color);
 }
 
 .product-image {
@@ -334,11 +339,11 @@ nav {
 }
 
 .upload-box {
-    border: 2px dashed #cbd5e1;
-    padding: 30px;
+    border: 2px dashed var(--glass-border);
+    padding: 40px;
     text-align: center;
-    border-radius: 10px;
-    background: var(--white);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.02);
     margin-bottom: 20px;
     cursor: pointer;
     transition: var(--transition);
@@ -346,7 +351,7 @@ nav {
 
 .upload-box:hover {
     border-color: var(--primary-color);
-    background: #eff6ff;
+    background: rgba(212, 175, 55, 0.05);
 }
 
 /* Testimonials */
@@ -395,8 +400,8 @@ footer {
 .footer-bottom {
     text-align: center;
     padding-top: 30px;
-    border-top: 1px solid #1e293b;
-    color: #94a3b8;
+    border-top: 1px solid var(--glass-border);
+    color: var(--text-light);
     font-size: 0.9rem;
 }
 

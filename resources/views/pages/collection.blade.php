@@ -5,7 +5,7 @@
 @section('content')
 <section class="section reveal" style="background: var(--bg-color); min-height: 100vh; position: relative; overflow: hidden; padding-top: 80px;">
     <!-- Decorative background -->
-    <div style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 100%; height: 100%; background: radial-gradient(circle at 50% -20%, rgba(99, 102, 241, 0.15) 0%, transparent 50%); z-index: 0;"></div>
+    <div style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 100%; height: 100%; background: radial-gradient(circle at 50% -20%, rgba(212, 175, 55, 0.15) 0%, transparent 50%); z-index: 0;"></div>
     
     <div class="container" style="position: relative; z-index: 1;">
         <div style="margin-bottom: 60px; text-align: center;">

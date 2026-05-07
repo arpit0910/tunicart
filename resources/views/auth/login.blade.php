@@ -1,56 +1,52 @@
 <x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+    <!-- Session Status -->
+    <x-auth-session-status class="mb-4" :status="session('status')" />
 
-        <!-- Session Status -->
-        <x-auth-session-status class="mb-4" :status="session('status')" />
+    <!-- Validation Errors -->
+    <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+    <form method="POST" action="{{ route('login') }}">
+        @csrf
 
-        <form method="POST" action="{{ route('login') }}">
-            @csrf
+        <!-- Email Address -->
+        <div class="form-group">
+            <label for="email" class="form-label">{{ __('Email Address') }}</label>
+            <input id="email" class="form-input" type="email" name="email" :value="old('email')" required autofocus placeholder="name@example.com" />
+        </div>
 
-            <!-- Email Address -->
-            <div>
-                <x-label for="email" :value="__('Email')" />
-
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            </div>
-
-            <!-- Password -->
-            <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
-
-                <x-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="current-password" />
-            </div>
-
-            <!-- Remember Me -->
-            <div class="block mt-4">
-                <label for="remember_me" class="inline-flex items-center">
-                    <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="remember">
-                    <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-                </label>
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
+        <!-- Password -->
+        <div class="form-group">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <label for="password" class="form-label" style="margin-bottom: 0;">{{ __('Password') }}</label>
                 @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
+                    <a href="{{ route('password.request') }}" style="font-size: 0.8rem; color: var(--primary-color);">
+                        {{ __('Forgot?') }}
                     </a>
                 @endif
-
-                <x-button class="ml-3">
-                    {{ __('Login') }}
-                </x-button>
             </div>
-        </form>
-    </x-auth-card>
+            <input id="password" class="form-input"
+                            type="password"
+                            name="password"
+                            required autocomplete="current-password" 
+                            placeholder="••••••••" />
+        </div>
+
+        <!-- Remember Me -->
+        <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+            <input id="remember_me" type="checkbox" name="remember" style="accent-color: var(--primary-color); width: 16px; height: 16px; cursor: pointer;">
+            <label for="remember_me" style="font-size: 0.85rem; color: var(--text-light); cursor: pointer;">{{ __('Keep me logged in') }}</label>
+        </div>
+
+        <div style="margin-top: 30px;">
+            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 14px;">
+                {{ __('Login to Account') }}
+            </button>
+        </div>
+    </form>
+
+    <div class="auth-footer">
+        {{ __("Don't have an account?") }} 
+        <a href="{{ route('register') }}">{{ __('Sign Up Free') }}</a>
+    </div>
 </x-guest-layout>
+

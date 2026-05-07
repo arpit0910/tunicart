@@ -5,20 +5,30 @@
 @section('content')
 <section class="section">
     <div class="container">
-        <div style="display: flex; gap: 30px;">
+        <div style="display: flex; gap: 30px; flex-wrap: wrap;">
             <!-- Sidebar -->
-            <div style="flex: 1; max-width: 250px;">
-                <div style="background: var(--bg-alt); padding: 20px; border-radius: 15px;">
-                    <h3 style="margin-bottom: 20px;">My Account</h3>
-                    <ul style="display: flex; flex-direction: column; gap: 10px;">
-                        <li><a href="#" style="font-weight: 700; color: var(--primary-color);">Dashboard</a></li>
-                        <li><a href="#">My Orders</a></li>
-                        <li><a href="#">Profile Settings</a></li>
-                        <li><a href="#">Custom Designs</a></li>
-                        <li>
+            <div style="flex: 1; min-width: 250px;">
+                <div class="glass" style="padding: 25px; border-radius: 20px;">
+                    <h3 style="margin-bottom: 25px; font-size: 1.4rem; font-weight: 800;">My Account</h3>
+                    <ul style="display: flex; flex-direction: column; gap: 15px;">
+                        <li><a href="#" style="font-weight: 700; color: var(--secondary-color); display: flex; align-items: center; gap: 10px;">
+                            <i class="fa-solid fa-gauge-high"></i> Dashboard
+                        </a></li>
+                        <li><a href="#" style="display: flex; align-items: center; gap: 10px; color: var(--text-light); hover: color: var(--white);">
+                            <i class="fa-solid fa-box"></i> My Orders
+                        </a></li>
+                        <li><a href="#" style="display: flex; align-items: center; gap: 10px; color: var(--text-light);">
+                            <i class="fa-solid fa-user-gear"></i> Profile Settings
+                        </a></li>
+                        <li><a href="#" style="display: flex; align-items: center; gap: 10px; color: var(--text-light);">
+                            <i class="fa-solid fa-palette"></i> Custom Designs
+                        </a></li>
+                        <li style="margin-top: 10px; padding-top: 20px; border-top: 1px solid var(--glass-border);">
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
-                                <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();" style="color: #ef4444;">Logout</a>
+                                <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();" style="color: #ef4444; display: flex; align-items: center; gap: 10px; font-weight: 600;">
+                                    <i class="fa-solid fa-right-from-bracket"></i> Logout
+                                </a>
                             </form>
                         </li>
                     </ul>
@@ -26,29 +36,34 @@
             </div>
 
             <!-- Main Content -->
-            <div style="flex: 3;">
-                <div style="background: var(--white); padding: 30px; border-radius: 15px; box-shadow: var(--shadow);">
-                    <h2>Welcome back, {{ Auth::user()->name }}!</h2>
-                    <p style="color: var(--text-light); margin-bottom: 30px;">From your dashboard you can view your recent orders and manage your account details.</p>
+            <div style="flex: 3; min-width: 300px;">
+                <div class="glass" style="padding: 40px; border-radius: 20px; border: 1px solid var(--glass-border);">
+                    <h2 style="font-size: 2rem; margin-bottom: 10px; font-weight: 900;">Welcome back, <span style="color: var(--secondary-color);">{{ Auth::user()->name }}</span>!</h2>
+                    <p style="color: var(--text-light); margin-bottom: 35px; font-size: 1.1rem;">Manage your orders, designs, and account settings from your central command center.</p>
 
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 40px;">
-                        <div style="background: #eff6ff; padding: 20px; border-radius: 12px; border-left: 4px solid var(--primary-color);">
-                            <div style="font-size: 0.9rem; color: var(--text-light);">Total Orders</div>
-                            <div style="font-size: 1.8rem; font-weight: 800;">0</div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 45px;">
+                        <div style="background: rgba(212, 175, 55, 0.1); padding: 25px; border-radius: 18px; border: 1px solid rgba(212, 175, 55, 0.2); position: relative; overflow: hidden;">
+                            <div style="position: absolute; top: -10px; right: -10px; font-size: 4rem; color: rgba(212, 175, 55, 0.05); z-index: 0;"><i class="fa-solid fa-shopping-bag"></i></div>
+                            <div style="font-size: 0.9rem; color: var(--text-light); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; position: relative; z-index: 1;">Total Orders</div>
+                            <div style="font-size: 2.5rem; font-weight: 900; color: #fff; position: relative; z-index: 1;">0</div>
                         </div>
-                        <div style="background: #fef2f2; padding: 20px; border-radius: 12px; border-left: 4px solid #ef4444;">
-                            <div style="font-size: 0.9rem; color: var(--text-light);">Active Designs</div>
-                            <div style="font-size: 1.8rem; font-weight: 800;">0</div>
+                        <div style="background: rgba(225, 198, 153, 0.1); padding: 25px; border-radius: 18px; border: 1px solid rgba(225, 198, 153, 0.2); position: relative; overflow: hidden;">
+                            <div style="position: absolute; top: -10px; right: -10px; font-size: 4rem; color: rgba(225, 198, 153, 0.05); z-index: 0;"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                            <div style="font-size: 0.9rem; color: var(--text-light); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; position: relative; z-index: 1;">Active Designs</div>
+                            <div style="font-size: 2.5rem; font-weight: 900; color: #fff; position: relative; z-index: 1;">0</div>
                         </div>
                     </div>
 
-                    <h3>Recent Orders</h3>
-                    <div style="text-align: center; padding: 40px; color: var(--text-light); background: var(--bg-alt); border-radius: 12px; margin-top: 20px;">
-                        No orders found yet. <a href="{{ route('products.index') }}" style="color: var(--primary-color); font-weight: 600;">Browse Products</a>
+                    <h3 style="margin-bottom: 20px; font-size: 1.5rem; font-weight: 800;">Recent Orders</h3>
+                    <div style="text-align: center; padding: 60px 40px; color: var(--text-light); background: rgba(255,255,255,0.02); border: 1px dashed var(--glass-border); border-radius: 18px;">
+                        <i class="fa-solid fa-box-open" style="font-size: 3rem; margin-bottom: 20px; opacity: 0.3;"></i>
+                        <p style="margin-bottom: 20px;">You haven't placed any orders yet. Ready to create something unique?</p>
+                        <a href="{{ route('products.index') }}" class="btn btn-primary" style="display: inline-block;">Start Shopping</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
 @endsection

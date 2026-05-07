@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,13 +12,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     @yield('styles')
 </head>
+
 <body>
     <header>
         <div class="container">
             <nav>
                 <div class="logo">
                     <a href="{{ url('/') }}">
-                        <h1>TUNICART<span>.</span></h1>
+                        <img src="{{ asset('images/logo.png') }}" alt="Tunicart Logo"
+                            style="height: 70px; width: auto;">
                     </a>
                 </div>
                 <div class="nav-links">
@@ -73,7 +76,8 @@
             <div class="footer-grid">
                 <div class="footer-col">
                     <h4 style="color: #fff; margin-bottom: 25px;">TUNICART.</h4>
-                    <p style="color: var(--text-light); margin-bottom: 20px;">The future of custom apparel. Premium t-shirts tailored to your vision with state-of-the-art print tech.</p>
+                    <p style="color: var(--text-light); margin-bottom: 20px;">The future of custom apparel. Premium
+                        t-shirts tailored to your vision with state-of-the-art print tech.</p>
                     <div class="social-links" style="display: flex; gap: 15px;">
                         <a href="#" style="color: var(--text-light);"><i class="fa-brands fa-facebook-f"></i></a>
                         <a href="#" style="color: var(--text-light);"><i class="fa-brands fa-instagram"></i></a>
@@ -83,10 +87,14 @@
                 <div class="footer-col">
                     <h4 style="color: #fff; margin-bottom: 25px;">Explore</h4>
                     <ul>
-                        <li style="margin-bottom: 12px;"><a href="#" style="color: var(--text-light);">Polo T-Shirts</a></li>
-                        <li style="margin-bottom: 12px;"><a href="#" style="color: var(--text-light);">Round Neck</a></li>
-                        <li style="margin-bottom: 12px;"><a href="#" style="color: var(--text-light);">Oversized Tees</a></li>
-                        <li style="margin-bottom: 12px;"><a href="#" style="color: var(--text-light);">Custom Print</a></li>
+                        <li style="margin-bottom: 12px;"><a href="#" style="color: var(--text-light);">Polo
+                                T-Shirts</a></li>
+                        <li style="margin-bottom: 12px;"><a href="#" style="color: var(--text-light);">Round
+                                Neck</a></li>
+                        <li style="margin-bottom: 12px;"><a href="#" style="color: var(--text-light);">Oversized
+                                Tees</a></li>
+                        <li style="margin-bottom: 12px;"><a href="#" style="color: var(--text-light);">Custom
+                                Print</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -100,14 +108,17 @@
                 </div>
                 <div class="footer-col">
                     <h4 style="color: #fff; margin-bottom: 25px;">Join the Drop</h4>
-                    <p style="color: var(--text-light); margin-bottom: 20px;">Subscribe for exclusive high-tech drops.</p>
+                    <p style="color: var(--text-light); margin-bottom: 20px;">Subscribe for exclusive high-tech drops.
+                    </p>
                     <div style="display: flex; gap: 10px;">
-                        <input type="email" placeholder="Your Email" style="padding: 12px; border-radius: 8px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); color: #fff; flex: 1;">
+                        <input type="email" placeholder="Your Email"
+                            style="padding: 12px; border-radius: 8px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); color: #fff; flex: 1;">
                         <button class="btn btn-primary" style="padding: 12px 20px;">Join</button>
                     </div>
                 </div>
             </div>
-            <div class="footer-bottom" style="margin-top: 60px; padding: 30px 0; border-top: 1px solid var(--glass-border); text-align: center; color: var(--text-light); font-size: 0.9rem;">
+            <div class="footer-bottom"
+                style="margin-top: 60px; padding: 30px 0; border-top: 1px solid var(--glass-border); text-align: center; color: var(--text-light); font-size: 0.9rem;">
                 <p>&copy; 2026 Tunicart. All rights reserved.</p>
             </div>
         </div>
@@ -116,4 +127,5 @@
     <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     @yield('scripts')
 </body>
+
 </html>

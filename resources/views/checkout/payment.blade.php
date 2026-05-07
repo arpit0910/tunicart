@@ -4,42 +4,60 @@
 
 @section('content')
 <section class="section">
-    <div class="container" style="max-width: 600px; text-align: center;">
-        <h2 style="margin-bottom: 20px;">Complete Your Payment</h2>
-        <p style="color: var(--text-light); margin-bottom: 30px;">Scan the QR code below using any UPI app (GPay, PhonePe, Paytm) and enter the Transaction ID to place your order.</p>
+    <div class="container" style="max-width: 650px; text-align: center;">
+        <h1 style="margin-bottom: 20px; font-weight: 900; font-size: 2.2rem;">Complete <span style="color: var(--secondary-color);">Payment</span></h1>
+        <p style="color: var(--text-light); margin-bottom: 40px; line-height: 1.6;">Scan the secure QR code below using any UPI app (GPay, PhonePe, Paytm) to finalize your masterwork order.</p>
         
-        <div style="background: #fff; padding: 40px; border-radius: 30px; box-shadow: var(--shadow-lg); border: 1px solid #eee;">
-            <div style="margin-bottom: 30px;">
-                <span style="font-size: 0.9rem; font-weight: 700; color: var(--text-light); text-transform: uppercase;">Amount to Pay</span>
-                <div style="font-size: 3rem; font-weight: 900; color: var(--primary-color);">₹{{ $total }}</div>
+        <div class="glass" style="padding: 50px 40px; border-radius: 40px; border: 1px solid var(--glass-border); position: relative; overflow: hidden;">
+            <!-- Glow Effect -->
+            <div style="position: absolute; top: -50px; left: -50px; width: 150px; height: 150px; background: var(--primary-color); filter: blur(70px); opacity: 0.1; z-index: 0;"></div>
+
+            <div style="margin-bottom: 40px; position: relative; z-index: 1;">
+                <span style="font-size: 0.8rem; font-weight: 800; color: var(--text-light); text-transform: uppercase; letter-spacing: 2px;">Total Payable</span>
+                <div style="font-size: 3.5rem; font-weight: 900; color: #fff; margin-top: 5px; text-shadow: 0 0 30px rgba(212, 175, 55, 0.3);">₹{{ $total }}</div>
             </div>
 
-            <!-- Simulated QR Code -->
-            <div style="width: 250px; height: 250px; margin: 0 auto 30px; padding: 20px; border: 1px solid #ddd; border-radius: 20px; background: #fafafa; display: flex; align-items: center; justify-content: center;">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=tunicart@upi%26pn=Tunicart%26am={{ $total }}%26cu=INR" alt="UPI QR Code" style="width: 100%;">
-            </div>
-
-            <div style="margin-bottom: 30px;">
-                <p style="font-weight: 700; margin-bottom: 5px;">UPI ID: <span style="color: var(--primary-color);">tunicart@upi</span></p>
-                <p style="font-size: 0.8rem; color: var(--text-light);">Merchant: Tunicart Apparel India</p>
-            </div>
-
-            <form action="{{ route('order.place') }}" method="POST">
-                @csrf
-                <div style="margin-bottom: 20px; text-align: left;">
-                    <label style="display: block; margin-bottom: 10px; font-weight: 600;">Transaction ID / UTR Number</label>
-                    <input type="text" name="transaction_id" placeholder="12-digit UPI Ref No." style="width: 100%; padding: 15px; border-radius: 10px; border: 2px solid var(--primary-color); font-size: 1.1rem;" required>
-                    <small style="color: var(--text-light); display: block; margin-top: 5px;">You can find this in your payment app history.</small>
+            <!-- QR Code Section -->
+            <div style="position: relative; z-index: 1; margin-bottom: 40px;">
+                <div style="width: 280px; height: 280px; margin: 0 auto; padding: 25px; border: 2px solid var(--glass-border); border-radius: 30px; background: #fff; box-shadow: 0 0 50px rgba(0,0,0,0.3); transition: var(--transition);" class="qr-container">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=230x230&data=upi://pay?pa=tunicart@upi%26pn=Tunicart%26am={{ $total }}%26cu=INR" alt="UPI QR Code" style="width: 100%; border-radius: 10px;">
                 </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 18px; font-size: 1.1rem; font-weight: 800;">Verify & Place Order</button>
+                <div style="margin-top: 20px;">
+                    <p style="font-weight: 800; color: var(--white); font-size: 1.1rem; letter-spacing: 0.5px;">UPI ID: <span style="color: var(--secondary-color);">tunicart@upi</span></p>
+                    <p style="font-size: 0.85rem; color: var(--text-light); margin-top: 5px;">Verified Merchant: Tunicart Apparel India</p>
+                </div>
+            </div>
+
+            <form action="{{ route('order.place') }}" method="POST" style="position: relative; z-index: 1;">
+                @csrf
+                <div style="margin-bottom: 25px; text-align: left;">
+                    <label style="display: block; margin-bottom: 12px; font-weight: 700; color: var(--text-color); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">Transaction ID / UTR Number</label>
+                    <input type="text" name="transaction_id" placeholder="12-digit UPI Ref No. (e.g. 123456...)" 
+                        style="width: 100%; padding: 18px; border-radius: 15px; border: 2px solid var(--primary-color); background: rgba(0,0,0,0.3); color: #fff; font-size: 1.1rem; font-weight: 600; outline: none; box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);" required>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-top: 10px; color: var(--text-light);">
+                        <i class="fa-solid fa-circle-info" style="font-size: 0.8rem;"></i>
+                        <small style="font-size: 0.8rem;">Required for payment verification.</small>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 20px; font-size: 1.1rem; font-weight: 900; border-radius: 15px; letter-spacing: 1px; box-shadow: 0 15px 30px rgba(212, 175, 55, 0.3);">
+                    Confirm & Place Order <i class="fa-solid fa-check-double" style="margin-left: 10px;"></i>
+                </button>
             </form>
         </div>
 
-        <div style="margin-top: 30px; display: flex; justify-content: center; gap: 20px; opacity: 0.6;">
-            <i class="fa-brands fa-google-pay" style="font-size: 2rem;"></i>
-            <i class="fa-solid fa-p" style="font-size: 2rem;"></i> <!-- PhonePe Placeholder -->
-            <i class="fa-solid fa-wallet" style="font-size: 2rem;"></i>
+        <div style="margin-top: 40px; display: flex; justify-content: center; gap: 30px; opacity: 0.5; align-items: center;">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo-vector.svg" style="height: 25px; filter: brightness(0) invert(1);">
+            <i class="fa-brands fa-google-pay" style="font-size: 2.5rem; color: #fff;"></i>
+            <i class="fa-brands fa-apple-pay" style="font-size: 2.5rem; color: #fff;"></i>
         </div>
     </div>
 </section>
+
+<style>
+    .qr-container:hover {
+        transform: scale(1.03);
+        box-shadow: 0 0 60px rgba(212, 175, 55, 0.4);
+    }
+</style>
+
 @endsection
