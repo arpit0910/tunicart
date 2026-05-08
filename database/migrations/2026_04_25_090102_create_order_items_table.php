@@ -21,6 +21,7 @@ class CreateOrderItemsTable extends Migration
             $table->decimal('price', 10, 2);
             $table->string('front_image')->nullable();
             $table->string('back_image')->nullable();
+            $table->text('variant_details')->nullable();
             $table->text('customization_notes')->nullable();
             $table->timestamps();
         });

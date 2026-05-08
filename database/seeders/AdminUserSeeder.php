@@ -15,7 +15,7 @@ class AdminUserSeeder extends Seeder
     {
         \App\Models\User::create([
             'name' => 'Admin Tunicart',
-            'email' => 'admin@tunicart.in',
+            'email' => 'admin@tunicart.com',
             'password' => \Hash::make('admin123'),
             'is_admin' => true
         ]);

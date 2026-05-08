@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Models\Coupon;
 use Illuminate\Http\Request;
 
 class CheckoutController extends Controller
@@ -16,8 +17,38 @@ class CheckoutController extends Controller
         
         $total = 0;
         foreach($cart as $item) $total += $item['price'] * $item['quantity'];
+
+        $discount = 0;
+        $coupon = session('applied_coupon');
+        if ($coupon) {
+            if ($coupon->type == 'percent') $discount = ($total * $coupon->value) / 100;
+            else $discount = $coupon->value;
+        }
+        $grand_total = $total - $discount;
         
-        return view('checkout.index', compact('cart', 'total'));
+        return view('checkout.index', compact('cart', 'total', 'discount', 'grand_total'));
+    }
+
+    public function applyCoupon(Request $request)
+    {
+        $coupon = Coupon::where('code', $request->code)->where('status', true)->first();
+        
+        if (!$coupon) return redirect()->back()->with('error', 'Invalid or inactive coupon');
+        if ($coupon->expiry_date && $coupon->expiry_date < now()->toDateString()) return redirect()->back()->with('error', 'Coupon expired');
+        
+        $total = 0;
+        foreach(session('cart', []) as $item) $total += $item['price'] * $item['quantity'];
+        
+        if ($total < $coupon->min_amount) return redirect()->back()->with('error', 'Minimum order amount for this coupon is ₹'.$coupon->min_amount);
+        
+        session(['applied_coupon' => $coupon]);
+        return redirect()->back()->with('success', 'Coupon applied successfully!');
+    }
+
+    public function removeCoupon()
+    {
+        session()->forget('applied_coupon');
+        return redirect()->back()->with('success', 'Coupon removed');
     }
 
     public function payment(Request $request)
@@ -36,7 +67,15 @@ class CheckoutController extends Controller
         $total = 0;
         foreach($cart as $item) $total += $item['price'] * $item['quantity'];
 
-        return view('checkout.payment', compact('total'));
+        $discount = 0;
+        $coupon = session('applied_coupon');
+        if ($coupon) {
+            if ($coupon->type == 'percent') $discount = ($total * $coupon->value) / 100;
+            else $discount = $coupon->value;
+        }
+        $grand_total = $total - $discount;
+
+        return view('checkout.payment', compact('grand_total'));
     }
 
     public function placeOrder(Request $request)
@@ -51,9 +90,17 @@ class CheckoutController extends Controller
         $total = 0;
         foreach($cart as $item) $total += $item['price'] * $item['quantity'];
 
+        $discount = 0;
+        $coupon = session('applied_coupon');
+        if ($coupon) {
+            if ($coupon->type == 'percent') $discount = ($total * $coupon->value) / 100;
+            else $discount = $coupon->value;
+        }
+        $grand_total = $total - $discount;
+
         $order = Order::create([
             'user_id' => auth()->id(),
-            'total_amount' => $total,
+            'total_amount' => $grand_total,
             'status' => 'pending',
             'shipping_address' => $details['shipping_address'],
             'phone' => $details['phone'],
@@ -65,16 +112,19 @@ class CheckoutController extends Controller
         ]);
 
         foreach ($cart as $id => $item) {
+            $product = Product::find($item['product_id']);
+            if($product) {
+                $product->decrement('stock', $item['quantity']);
+            }
             OrderItem::create([
                 'order_id' => $order->id,
-                'product_id' => $id,
+                'product_id' => $item['product_id'],
                 'quantity' => $item['quantity'],
                 'price' => $item['price'],
-                'customization_details' => json_encode([
-                    'front' => $item['front_image'] ?? null,
-                    'back' => $item['back_image'] ?? null,
-                    'notes' => $item['notes'] ?? null
-                ])
+                'variant_details' => isset($item['variants']) ? json_encode($item['variants']) : null,
+                'front_image' => $item['front_image'] ?? null,
+                'back_image' => $item['back_image'] ?? null,
+                'customization_notes' => $item['notes'] ?? null
             ]);
         }
 

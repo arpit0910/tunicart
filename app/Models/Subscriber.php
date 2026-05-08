@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Banner extends Model
+class Subscriber extends Model
 {
-    protected $fillable = ['image', 'title', 'sub_title', 'link'];
+    protected $fillable = ['email'];
 }

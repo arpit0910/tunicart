@@ -40,12 +40,20 @@
                                                     @endif
                                                 </div>
                                                 <div>
-                                                    <h4 style="margin-bottom: 5px; font-size: 1.1rem; color: #fff;">{{ $details['name'] }}</h4>
-                                                    <p style="font-size: 0.85rem; color: var(--text-light);">Size: Standard | Black</p>
+                                                    <h4 style="margin-bottom: 5px; font-size: 1.1rem; color: var(--black);">{{ $details['name'] }}</h4>
+                                                    <p style="font-size: 0.85rem; color: var(--text-light);">
+                                                        @if(isset($details['variants']) && is_array($details['variants']))
+                                                            @foreach($details['variants'] as $name => $value)
+                                                                {{ $name }}: {{ $value }}{{ !$loop->last ? ' | ' : '' }}
+                                                            @endforeach
+                                                        @else
+                                                            Standard
+                                                        @endif
+                                                    </p>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td style="padding: 20px; font-weight: 600; color: #fff;">₹{{ $details['price'] }}</td>
+                                        <td style="padding: 20px; font-weight: 600; color: var(--black);">₹{{ $details['price'] }}</td>
                                         <td style="padding: 20px;">
                                             <div style="display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.05); padding: 5px 12px; border-radius: 8px; width: fit-content;">
                                                 <span style="font-weight: 700;">{{ $details['quantity'] }}</span>
@@ -72,7 +80,7 @@
                         <h3 style="margin-bottom: 25px; font-weight: 800; font-size: 1.5rem;">Summary</h3>
                         <div style="display: flex; justify-content: space-between; margin-bottom: 18px; color: var(--text-light);">
                             <span>Order Subtotal</span>
-                            <span style="color: #fff; font-weight: 600;">₹{{ $total }}</span>
+                            <span style="color: var(--black); font-weight: 600;">₹{{ $total }}</span>
                         </div>
                         <div style="display: flex; justify-content: space-between; margin-bottom: 18px; color: var(--text-light);">
                             <span>Shipping (Standard)</span>
@@ -80,7 +88,7 @@
                         </div>
                         <div style="display: flex; justify-content: space-between; margin-bottom: 25px; color: var(--text-light);">
                             <span>Tax (GST 12%)</span>
-                            <span style="color: #fff; font-weight: 600;">Included</span>
+                            <span style="color: var(--black); font-weight: 600;">Included</span>
                         </div>
                         <div style="display: flex; justify-content: space-between; margin-top: 25px; padding-top: 25px; border-top: 1px solid var(--glass-border); font-weight: 900; font-size: 1.4rem;">
                             <span>Total</span>

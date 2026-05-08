@@ -14,16 +14,16 @@
 
             <div style="margin-bottom: 40px; position: relative; z-index: 1;">
                 <span style="font-size: 0.8rem; font-weight: 800; color: var(--text-light); text-transform: uppercase; letter-spacing: 2px;">Total Payable</span>
-                <div style="font-size: 3.5rem; font-weight: 900; color: #fff; margin-top: 5px; text-shadow: 0 0 30px rgba(212, 175, 55, 0.3);">₹{{ $total }}</div>
+                <div style="font-size: 3.5rem; font-weight: 900; color: var(--black); margin-top: 5px; text-shadow: 0 0 30px var(--accent-glow);">₹{{ $grand_total }}</div>
             </div>
 
             <!-- QR Code Section -->
             <div style="position: relative; z-index: 1; margin-bottom: 40px;">
                 <div style="width: 280px; height: 280px; margin: 0 auto; padding: 25px; border: 2px solid var(--glass-border); border-radius: 30px; background: #fff; box-shadow: 0 0 50px rgba(0,0,0,0.3); transition: var(--transition);" class="qr-container">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=230x230&data=upi://pay?pa=tunicart@upi%26pn=Tunicart%26am={{ $total }}%26cu=INR" alt="UPI QR Code" style="width: 100%; border-radius: 10px;">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=230x230&data=upi://pay?pa=tunicart@upi%26pn=Tunicart%26am={{ $grand_total }}%26cu=INR" alt="UPI QR Code" style="width: 100%; border-radius: 10px;">
                 </div>
                 <div style="margin-top: 20px;">
-                    <p style="font-weight: 800; color: var(--white); font-size: 1.1rem; letter-spacing: 0.5px;">UPI ID: <span style="color: var(--secondary-color);">tunicart@upi</span></p>
+                    <p style="font-weight: 800; color: var(--black); font-size: 1.1rem; letter-spacing: 0.5px;">UPI ID: <span style="color: var(--secondary-color);">tunicart@upi</span></p>
                     <p style="font-size: 0.85rem; color: var(--text-light); margin-top: 5px;">Verified Merchant: Tunicart Apparel India</p>
                 </div>
             </div>
@@ -33,7 +33,7 @@
                 <div style="margin-bottom: 25px; text-align: left;">
                     <label style="display: block; margin-bottom: 12px; font-weight: 700; color: var(--text-color); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">Transaction ID / UTR Number</label>
                     <input type="text" name="transaction_id" placeholder="12-digit UPI Ref No. (e.g. 123456...)" 
-                        style="width: 100%; padding: 18px; border-radius: 15px; border: 2px solid var(--primary-color); background: rgba(0,0,0,0.3); color: #fff; font-size: 1.1rem; font-weight: 600; outline: none; box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);" required>
+                        style="width: 100%; padding: 18px; border-radius: 15px; border: 2px solid var(--accent-color); background: #fff; color: var(--black); font-size: 1.1rem; font-weight: 700; outline: none; box-shadow: var(--shadow);" required>
                     <div style="display: flex; align-items: center; gap: 8px; margin-top: 10px; color: var(--text-light);">
                         <i class="fa-solid fa-circle-info" style="font-size: 0.8rem;"></i>
                         <small style="font-size: 0.8rem;">Required for payment verification.</small>
@@ -46,9 +46,9 @@
         </div>
 
         <div style="margin-top: 40px; display: flex; justify-content: center; gap: 30px; opacity: 0.5; align-items: center;">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo-vector.svg" style="height: 25px; filter: brightness(0) invert(1);">
-            <i class="fa-brands fa-google-pay" style="font-size: 2.5rem; color: #fff;"></i>
-            <i class="fa-brands fa-apple-pay" style="font-size: 2.5rem; color: #fff;"></i>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo-vector.svg" style="height: 25px; filter: contrast(0);">
+            <i class="fa-brands fa-google-pay" style="font-size: 2.5rem; color: var(--black);"></i>
+            <i class="fa-brands fa-apple-pay" style="font-size: 2.5rem; color: var(--black);"></i>
         </div>
     </div>
 </section>

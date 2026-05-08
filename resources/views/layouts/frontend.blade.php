@@ -14,33 +14,52 @@
 </head>
 
 <body>
-    <header>
+    <header style="background: var(--glass); border-bottom: 1px solid var(--glass-border); padding: 5px 0;">
         <div class="container">
-            <nav>
+            <nav style="display: flex; justify-content: space-between; align-items: center;">
                 <div class="logo">
                     <a href="{{ url('/') }}">
                         <img src="{{ asset('images/logo.png') }}" alt="Tunicart Logo"
-                            style="height: 70px; width: auto;">
+                            style="height: 70px; width: auto; filter: drop-shadow(0 0 10px var(--accent-glow));">
                     </a>
                 </div>
-                <div class="nav-links">
-                    <a href="{{ url('/') }}">Home</a>
-                    <a href="{{ route('products.index') }}">Shop</a>
-                    <a href="{{ url('/about') }}">About Us</a>
-                    <a href="{{ url('/contact') }}">Contact</a>
+                <div class="nav-links" style="display: flex; gap: 30px; align-items: center;">
+                    <a href="{{ url('/') }}" style="font-weight: 700; color: var(--black); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; {{ Request::is('/') ? 'color: var(--accent-color);' : '' }}">Home</a>
+                    <a href="{{ route('products.index') }}" style="font-weight: 700; color: var(--black); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; {{ Request::is('products*') ? 'color: var(--accent-color);' : '' }}">Shop</a>
+                    <a href="{{ url('/about') }}" style="font-weight: 700; color: var(--black); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px;">About</a>
+                    <a href="{{ url('/contact') }}" style="font-weight: 700; color: var(--black); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px;">Contact</a>
                 </div>
-                <div class="nav-icons">
-                    <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
-                    <a href="{{ route('cart.index') }}"><i class="fa-solid fa-cart-shopping"></i></a>
+                <div class="nav-icons" style="display: flex; gap: 20px; align-items: center; font-size: 1.2rem; color: var(--black);">
+                    <a href="{{ route('products.index') }}" style="transition: var(--transition);"><i class="fa-solid fa-magnifying-glass"></i></a>
+                    <a href="{{ route('wishlist.index') }}" style="transition: var(--transition); position: relative;">
+                        <i class="fa-solid fa-heart"></i>
+                    </a>
+                    <a href="{{ route('cart.index') }}" style="transition: var(--transition); position: relative;">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        @if(count(session('cart', [])) > 0)
+                            <span style="position: absolute; -top: 8px; -right: 8px; background: var(--accent-color); color: var(--primary-color); font-size: 0.6rem; width: 15px; height: 15px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900;">{{ count(session('cart', [])) }}</span>
+                        @endif
+                    </a>
                     @auth
-                        <a href="{{ route('dashboard') }}"><i class="fa-solid fa-user"></i></a>
+                        <a href="{{ route('dashboard') }}" style="transition: var(--transition); color: var(--accent-color);"><i class="fa-solid fa-circle-user"></i></a>
                     @else
-                        <a href="{{ route('login') }}" class="btn btn-primary">Login</a>
+                        <a href="{{ route('login') }}" class="btn btn-primary" style="padding: 10px 25px; font-size: 0.8rem; border-radius: 50px;">Login</a>
                     @endauth
                 </div>
             </nav>
         </div>
     </header>
+
+    @if(session('success'))
+        <div style="background: var(--accent-color); color: var(--primary-color); padding: 12px; text-align: center; font-weight: 900; position: fixed; top: 0; width: 100%; z-index: 9999; box-shadow: 0 5px 20px var(--accent-glow); text-transform: uppercase; letter-spacing: 1px; font-size: 0.85rem;">
+            <i class="fa-solid fa-circle-check" style="margin-right: 10px;"></i> {{ session('success') }}
+        </div>
+    @endif
+    @if(session('error'))
+        <div style="background: #dc2626; color: white; padding: 12px; text-align: center; font-weight: 900; position: fixed; top: 0; width: 100%; z-index: 9999; text-transform: uppercase; letter-spacing: 1px; font-size: 0.85rem;">
+            <i class="fa-solid fa-triangle-exclamation" style="margin-right: 10px;"></i> {{ session('error') }}
+        </div>
+    @endif
 
     <main>
         @yield('content')
@@ -56,9 +75,9 @@
             <i class="fa-solid fa-shirt"></i>
             <span>Shop</span>
         </a>
-        <a href="{{ route('cart.index') }}">
-            <i class="fa-solid fa-cart-shopping"></i>
-            <span>Cart</span>
+        <a href="{{ route('wishlist.index') }}" class="{{ Request::is('wishlist*') ? 'active' : '' }}">
+            <i class="fa-solid fa-heart"></i>
+            <span>Wishlist</span>
         </a>
         <a href="{{ route('dashboard') }}">
             <i class="fa-solid fa-user"></i>
@@ -75,7 +94,7 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
-                    <h4 style="color: #fff; margin-bottom: 25px;">TUNICART.</h4>
+                    <h4 style="color: var(--black); margin-bottom: 25px;">TUNICART.</h4>
                     <p style="color: var(--text-light); margin-bottom: 20px;">The future of custom apparel. Premium
                         t-shirts tailored to your vision with state-of-the-art print tech.</p>
                     <div class="social-links" style="display: flex; gap: 15px;">
@@ -85,20 +104,16 @@
                     </div>
                 </div>
                 <div class="footer-col">
-                    <h4 style="color: #fff; margin-bottom: 25px;">Explore</h4>
+                    <h4 style="color: var(--black); margin-bottom: 25px;">Explore</h4>
                     <ul>
-                        <li style="margin-bottom: 12px;"><a href="#" style="color: var(--text-light);">Polo
-                                T-Shirts</a></li>
-                        <li style="margin-bottom: 12px;"><a href="#" style="color: var(--text-light);">Round
-                                Neck</a></li>
-                        <li style="margin-bottom: 12px;"><a href="#" style="color: var(--text-light);">Oversized
-                                Tees</a></li>
-                        <li style="margin-bottom: 12px;"><a href="#" style="color: var(--text-light);">Custom
-                                Print</a></li>
+                        <li style="margin-bottom: 12px;"><a href="{{ route('products.index') }}" style="color: var(--text-light);">Round Neck</a></li>
+                        <li style="margin-bottom: 12px;"><a href="{{ route('products.index') }}" style="color: var(--text-light);">Polo T-Shirts</a></li>
+                        <li style="margin-bottom: 12px;"><a href="{{ route('products.index') }}" style="color: var(--text-light);">Oversized Tees</a></li>
+                        <li style="margin-bottom: 12px;"><a href="{{ route('products.index') }}" style="color: var(--text-light);">Custom Print</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
-                    <h4 style="color: #fff; margin-bottom: 25px;">Support</h4>
+                    <h4 style="color: var(--black); margin-bottom: 25px;">Support</h4>
                     <ul>
                         <li><a href="{{ url('/about') }}" style="color: var(--text-light);">About Us</a></li>
                         <li><a href="{{ url('/contact') }}" style="color: var(--text-light);">Contact Us</a></li>
@@ -107,14 +122,14 @@
                     </ul>
                 </div>
                 <div class="footer-col">
-                    <h4 style="color: #fff; margin-bottom: 25px;">Join the Drop</h4>
-                    <p style="color: var(--text-light); margin-bottom: 20px;">Subscribe for exclusive high-tech drops.
-                    </p>
-                    <div style="display: flex; gap: 10px;">
-                        <input type="email" placeholder="Your Email"
-                            style="padding: 12px; border-radius: 8px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); color: #fff; flex: 1;">
-                        <button class="btn btn-primary" style="padding: 12px 20px;">Join</button>
-                    </div>
+                    <h4 style="color: var(--black); margin-bottom: 25px;">Join the Drop</h4>
+                    <p style="color: var(--text-light); margin-bottom: 20px;">Subscribe for exclusive high-tech drops.</p>
+                    <form action="{{ route('subscribe') }}" method="POST" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        @csrf
+                        <input type="email" name="email" placeholder="Your Email" required
+                            style="padding: 12px; border-radius: 8px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); color: var(--black); flex: 1; min-width: 200px;">
+                        <button type="submit" class="btn btn-primary" style="padding: 12px 20px;">Join</button>
+                    </form>
                 </div>
             </div>
             <div class="footer-bottom"

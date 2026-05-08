@@ -19,7 +19,12 @@ class CreateOrdersTable extends Migration
             $table->decimal('total_amount', 10, 2);
             $table->string('status')->default('pending');
             $table->text('shipping_address');
+            $table->string('city');
+            $table->string('pincode');
             $table->string('phone');
+            $table->string('payment_method')->default('UPI');
+            $table->string('payment_status')->default('pending');
+            $table->string('transaction_id')->nullable();
             $table->timestamps();
         });
     }

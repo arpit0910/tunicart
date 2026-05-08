@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Testimonial extends Model
 {
-    use HasFactory;
+    protected $fillable = ['user_name', 'content', 'rating', 'image'];
 }

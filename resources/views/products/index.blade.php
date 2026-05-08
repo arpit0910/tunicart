@@ -10,93 +10,93 @@
             <p style="font-size: 1.1rem; color: var(--text-light);">Premium engineered apparel for the digital age</p>
         </div>
 
-        <div style="display: flex; gap: 40px; margin-top: 50px; flex-wrap: wrap;">
+        <div style="display: flex; gap: 40px; margin-top: 50px; flex-wrap: wrap;" class="flex-responsive">
             <!-- Filters Sidebar -->
-            <div style="flex: 1; min-width: 280px;">
-                <div class="glass" style="padding: 35px; border-radius: 24px; position: sticky; top: 120px; border: 1px solid var(--glass-border);">
-                    <h3 style="margin-bottom: 30px; font-size: 1.4rem; font-weight: 800; display: flex; align-items: center; gap: 12px;">
-                        <i class="fa-solid fa-sliders" style="color: var(--primary-color);"></i> Filters
-                    </h3>
-                    
-                    <div style="margin-bottom: 35px;">
-                        <h4 style="margin-bottom: 20px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-light);">Categories</h4>
-                        <ul style="display: flex; flex-direction: column; gap: 15px;">
-                            <li>
-                                <label style="display: flex; align-items: center; gap: 12px; cursor: pointer; font-weight: 600; transition: var(--transition);">
-                                    <input type="checkbox" checked style="width: 18px; height: 18px; accent-color: var(--secondary-color);"> All Collections
-                                </label>
-                            </li>
-                            @foreach($categories as $category)
-                                <li>
-                                    <label style="display: flex; align-items: center; gap: 12px; cursor: pointer; color: var(--text-light); hover: color: var(--white); transition: var(--transition);">
-                                        <input type="checkbox" style="width: 18px; height: 18px; accent-color: var(--secondary-color);"> {{ $category->name }}
-                                    </label>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
+            <div style="flex: 1; min-width: 280px;" class="mobile-100">
+                <div class="glass" style="padding: 35px; border-radius: 24px; position: sticky; top: 120px; border: 1px solid var(--glass-border); box-shadow: var(--shadow);">
+                    <form action="{{ route('products.index') }}" method="GET" id="filterForm">
+                        <h3 style="margin-bottom: 30px; font-size: 1.4rem; font-weight: 800; display: flex; align-items: center; gap: 12px; color: var(--black);">
+                            <i class="fa-solid fa-sliders" style="color: var(--accent-color);"></i> Filters
+                        </h3>
 
-                    <div style="margin-bottom: 35px;">
-                        <h4 style="margin-bottom: 20px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-light);">Price Range</h4>
-                        <input type="range" style="width: 100%; accent-color: var(--primary-color); height: 6px; border-radius: 10px;" min="0" max="2000" value="2000">
-                        <div style="display: flex; justify-content: space-between; font-size: 0.9rem; font-weight: 700; margin-top: 15px; color: var(--white);">
-                            <span>₹0</span>
-                            <span>₹2,000</span>
+                        <div style="margin-bottom: 30px;">
+                            <h4 style="margin-bottom: 15px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-light); font-weight: 800;">Search</h4>
+                            <div style="position: relative;">
+                                <input type="text" name="search" value="{{ request('search') }}" placeholder="Search masterworks..." style="width: 100%; padding: 14px 15px; padding-right: 45px; border-radius: 12px; border: 1px solid var(--glass-border); outline: none; background: #fff; font-weight: 600; color: var(--black);">
+                                <button type="submit" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); border: none; background: none; color: var(--accent-color); cursor: pointer; font-size: 1.1rem;">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <button class="btn btn-primary" style="width: 100%; padding: 15px; border-radius: 12px; font-size: 0.95rem; box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);">
-                        Apply Selection
-                    </button>
+                        
+                        <div style="margin-bottom: 35px;">
+                            <h4 style="margin-bottom: 20px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-light); font-weight: 800;">Collections</h4>
+                            <div style="display: flex; flex-direction: column; gap: 15px;">
+                                <label style="display: flex; align-items: center; gap: 12px; cursor: pointer; font-weight: 700; color: var(--black);">
+                                    <input type="radio" name="category" value="" {{ !request('category') ? 'checked' : '' }} onchange="this.form.submit()" style="accent-color: var(--accent-color); width: 18px; height: 18px;"> All Drops
+                                </label>
+                                @foreach($categories as $category)
+                                    <label style="display: flex; align-items: center; gap: 12px; cursor: pointer; color: var(--text-light); font-weight: 600; transition: var(--transition);">
+                                        <input type="radio" name="category" value="{{ $category->id }}" {{ request('category') == $category->id ? 'checked' : '' }} onchange="this.form.submit()" style="accent-color: var(--accent-color); width: 18px; height: 18px;"> {{ $category->name }}
+                                    </label>
+                                @endforeach
+                            </div>
+                        </div>
+
+                        <input type="hidden" name="sort" id="sortInput" value="{{ request('sort') }}">
+                        
+                        <a href="{{ route('products.index') }}" class="btn" style="width: 100%; padding: 14px; border-radius: 12px; font-size: 0.85rem; border: 1px solid var(--glass-border); text-align: center; color: var(--black); font-weight: 800; background: #fff;">
+                            Reset View
+                        </a>
+                    </form>
                 </div>
             </div>
 
             <!-- Products Grid -->
-            <div style="flex: 3; min-width: 300px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding: 0 5px;">
-                    <span style="color: var(--text-light); font-size: 0.95rem; font-weight: 600;">Showing <span style="color: #fff;">{{ $products->count() }}</span> masterworks</span>
-                    <select style="background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: #fff; padding: 8px 15px; border-radius: 8px; font-family: inherit; font-size: 0.9rem; outline: none;">
-                        <option>Newest First</option>
-                        <option>Price: Low to High</option>
-                        <option>Price: High to Low</option>
-                        <option>Most Popular</option>
+            <div style="flex: 3; min-width: 300px;" class="mobile-100">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 35px; padding: 0 10px;">
+                    <span style="color: var(--text-light); font-size: 0.9rem; font-weight: 700;">MANIFESTING <span style="color: var(--accent-color);">{{ $products->total() }}</span> DESIGNS</span>
+                    <select onchange="document.getElementById('sortInput').value = this.value; document.getElementById('filterForm').submit();" style="background: #fff; border: 1px solid var(--glass-border); color: var(--black); padding: 10px 20px; border-radius: 12px; font-family: inherit; font-size: 0.9rem; outline: none; cursor: pointer; font-weight: 700; box-shadow: var(--shadow);">
+                        <option value="latest" {{ request('sort') == 'latest' ? 'selected' : '' }}>Latest Drops</option>
+                        <option value="price_low" {{ request('sort') == 'price_low' ? 'selected' : '' }}>Price: Minimalist</option>
+                        <option value="price_high" {{ request('sort') == 'price_high' ? 'selected' : '' }}>Price: Premium</option>
                     </select>
                 </div>
 
-                <div class="products-grid">
+                <div class="products-grid" style="gap: 30px;">
                     @forelse($products as $product)
-                        <div class="product-card" onclick="window.location.href='{{ route('products.show', $product->slug) }}'" style="cursor: pointer;">
-                            <div class="product-image">
-                                <img src="{{ Str::startsWith($product->image, 'http') ? $product->image : asset('storage/' . $product->image) }}" alt="{{ $product->name }}" style="transition: var(--transition);">
+                        <div class="product-card" onclick="window.location.href='{{ route('products.show', $product->slug) }}'" style="cursor: pointer; background: #fff; border-radius: 24px; box-shadow: var(--shadow); transition: var(--transition);">
+                            <div class="product-image" style="border-radius: 24px 24px 0 0; overflow: hidden; height: 400px; position: relative;">
+                                <img src="{{ Str::startsWith($product->image, 'http') ? $product->image : asset('storage/' . $product->image) }}" alt="{{ $product->name }}" style="transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1); width: 100%; height: 100%; object-fit: cover;">
                                 @if($product->is_featured)
-                                    <span class="product-badge" style="background: linear-gradient(135deg, var(--accent-color), #db2777); border: none;">Featured Drop</span>
+                                    <span class="product-badge" style="background: var(--accent-color); color: var(--primary-color); border: none; font-weight: 900; letter-spacing: 1px; box-shadow: 0 5px 15px var(--accent-glow);">EXCLUSIVE DROP</span>
                                 @endif
-                                <div style="position: absolute; bottom: 15px; right: 15px; opacity: 0; transform: translateY(10px); transition: var(--transition);" class="card-action">
-                                    <span class="btn btn-primary" style="padding: 8px 15px; font-size: 0.75rem; border-radius: 8px;">View Details</span>
+                                <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(30, 14, 0, 0.4), transparent); opacity: 0; transition: var(--transition);" class="image-overlay"></div>
+                                <div style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(20px); opacity: 0; transition: var(--transition); z-index: 2; width: 80%;" class="card-action">
+                                    <span class="btn btn-primary" style="width: 100%; padding: 12px; font-size: 0.85rem; border-radius: 10px; background: #fff; color: var(--primary-color); font-weight: 900; box-shadow: 0 10px 20px rgba(0,0,0,0.2);">Configure Design</span>
                                 </div>
                             </div>
-                            <div class="product-info" style="padding: 25px;">
-                                <span style="font-size: 0.75rem; color: var(--secondary-color); font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px;">{{ $product->category->name }}</span>
-                                <h3 style="margin: 10px 0 15px; font-size: 1.2rem; font-weight: 800; line-height: 1.3;">
-                                    <a href="{{ route('products.show', $product->slug) }}" style="color: #fff;">{{ $product->name }}</a>
+                            <div class="product-info" style="padding: 30px;">
+                                <span style="font-size: 0.7rem; color: var(--accent-color); font-weight: 900; text-transform: uppercase; letter-spacing: 2px;">{{ $product->category->name }}</span>
+                                <h3 style="margin: 8px 0 20px; font-size: 1.25rem; font-weight: 900; line-height: 1.2;">
+                                    <a href="{{ route('products.show', $product->slug) }}" style="color: var(--black);">{{ $product->name }}</a>
                                 </h3>
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
-                                    <span class="product-price" style="font-size: 1.4rem; font-weight: 900;">₹{{ $product->price }}</span>
-                                    <div style="display: flex; gap: 5px; color: #fbbf24; font-size: 0.8rem;">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span class="product-price" style="font-size: 1.5rem; font-weight: 900; color: var(--primary-color);">₹{{ $product->price }}</span>
+                                    <div style="display: flex; gap: 4px; color: var(--accent-color); font-size: 0.85rem;">
+                                        @for($i=0; $i<5; $i++) <i class="fa-solid fa-star"></i> @endfor
                                     </div>
                                 </div>
                             </div>
                         </div>
                     @empty
-                        <div class="glass" style="grid-column: 1/-1; text-align: center; padding: 80px 40px; border-radius: 30px; border: 1px dashed var(--glass-border);">
-                            <i class="fa-solid fa-magnifying-glass" style="font-size: 3rem; color: var(--text-light); margin-bottom: 20px; opacity: 0.3;"></i>
-                            <h3 style="font-weight: 800; margin-bottom: 10px;">No masterworks found.</h3>
-                            <p style="color: var(--text-light);">Try adjusting your filters to find your perfect fit.</p>
+                        <div class="glass" style="grid-column: 1/-1; text-align: center; padding: 100px 40px; border-radius: 40px; border: 2px dashed var(--accent-color); background: var(--bg-alt);">
+                            <div style="width: 100px; height: 100px; background: rgba(var(--primary-rgb), 0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 30px;">
+                                <i class="fa-solid fa-magnifying-glass-chart" style="font-size: 2.5rem; color: var(--accent-color); opacity: 0.5;"></i>
+                            </div>
+                            <h2 style="font-weight: 900; color: var(--black); margin-bottom: 15px;">No Manifestations Found</h2>
+                            <p style="color: var(--text-light); font-size: 1.1rem; max-width: 400px; margin: 0 auto 40px;">Your search criteria did not match any current designs. Try expanding your vision.</p>
+                            <a href="{{ route('products.index') }}" class="btn btn-primary" style="padding: 15px 40px; border-radius: 50px;">Reset Vision Matrix</a>
                         </div>
                     @endforelse
                 </div>

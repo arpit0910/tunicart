@@ -19,4 +19,11 @@ class HomeController extends Controller
         
         return view('welcome', compact('banners', 'featured_products', 'categories', 'testimonials'));
     }
+
+    public function subscribe(Request $request)
+    {
+        $request->validate(['email' => 'required|email|unique:subscribers']);
+        \App\Models\Subscriber::create(['email' => $request->email]);
+        return redirect()->back()->with('success', 'Thank you for subscribing!');
+    }
 }

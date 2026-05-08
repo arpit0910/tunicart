@@ -30,5 +30,9 @@ class PageController extends Controller
         return view('pages.track-order', compact('order')); 
     }
 
-    public function faq() { return view('pages.faq'); }
+    public function faq() 
+    { 
+        $faqs = \App\Models\Faq::latest()->get();
+        return view('pages.faq', compact('faqs')); 
+    }
 }

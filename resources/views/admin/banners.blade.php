@@ -25,7 +25,11 @@
                     <td>{{ $banner->sub_title }}</td>
                     <td>{{ $banner->link }}</td>
                     <td>
-                        <a href="#" style="color: red;"><i class="fa-solid fa-trash"></i></a>
+                        <button onclick="openEditModal({{ json_encode($banner) }})" style="color: blue; border:none; background:none; cursor:pointer; margin-right: 15px;"><i class="fa-solid fa-pen"></i></button>
+                        <form action="{{ route('admin.banners.delete', $banner->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Delete this banner?')">
+                            @csrf
+                            <button type="submit" style="color: red; border:none; background:none; cursor:pointer;"><i class="fa-solid fa-trash"></i></button>
+                        </form>
                     </td>
                 </tr>
             @empty
@@ -35,7 +39,7 @@
     </table>
 </div>
 
-<!-- Modal -->
+<!-- Add Modal -->
 <div id="addModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000;">
     <div style="background:#fff; width:500px; margin:100px auto; padding:40px; border-radius:15px;">
         <h2>Add Hero Banner</h2>
@@ -64,4 +68,44 @@
         </form>
     </div>
 </div>
+
+<!-- Edit Modal -->
+<div id="editModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000;">
+    <div style="background:#fff; width:500px; margin:100px auto; padding:40px; border-radius:15px;">
+        <h2>Edit Banner</h2>
+        <form id="editForm" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="form-group">
+                <label>Banner Image (Leave blank to keep current)</label>
+                <input type="file" name="image" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" name="title" id="edit_title" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Sub Title</label>
+                <input type="text" name="sub_title" id="edit_sub_title" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Link URL</label>
+                <input type="text" name="link" id="edit_link" class="form-control">
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 30px;">
+                <button type="submit" class="btn btn-primary" style="flex:1;">Update Banner</button>
+                <button type="button" onclick="document.getElementById('editModal').style.display='none'" class="btn" style="background:#eee; flex:1;">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function openEditModal(banner) {
+        document.getElementById('editForm').action = "/admin/banners/update/" + banner.id;
+        document.getElementById('edit_title').value = banner.title;
+        document.getElementById('edit_sub_title').value = banner.sub_title;
+        document.getElementById('edit_link').value = banner.link;
+        document.getElementById('editModal').style.display = 'block';
+    }
+</script>
 @endsection

@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use App\Models\User;
+use App\Models\Category;
+use App\Models\Product;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,41 +16,27 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // Categories
-        $round_neck = \App\Models\Category::create(['name' => 'Round Neck T-Shirts', 'slug' => 'round-neck', 'image' => 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80']);
-        $polo = \App\Models\Category::create(['name' => 'Polo T-Shirts', 'slug' => 'polo', 'image' => 'https://images.unsplash.com/photo-1581655353564-df123a1eb820?auto=format&fit=crop&w=800&q=80']);
-        $v_neck = \App\Models\Category::create(['name' => 'V-Neck T-Shirts', 'slug' => 'v-neck', 'image' => 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=800&q=80']);
-        $oversized = \App\Models\Category::create(['name' => 'Oversized T-Shirts', 'slug' => 'oversized', 'image' => 'https://images.unsplash.com/photo-1554568218-0f1715e72254?auto=format&fit=crop&w=800&q=80']);
+        // 1. Admin User
+        if (!User::where('email', 'admin@tunicart.com')->exists()) {
+            $this->call(AdminUserSeeder::class);
+        }
 
-        // Products
-        \App\Models\Product::create([
-            'category_id' => $round_neck->id,
-            'name' => 'Classic Cotton Round Neck',
-            'slug' => 'classic-cotton-round-neck',
-            'description' => 'Premium 100% cotton round neck t-shirt. Breathable and perfect for Indian summers.',
-            'price' => 499,
-            'image' => 'product-1.png',
-            'is_featured' => true
-        ]);
+        // 2. Categories
+        $categories = [
+            ['name' => 'Round Neck T-Shirts', 'slug' => 'round-neck', 'image' => 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80'],
+            ['name' => 'Polo T-Shirts', 'slug' => 'polo', 'image' => 'https://images.unsplash.com/photo-1581655353564-df123a1eb820?auto=format&fit=crop&w=800&q=80'],
+            ['name' => 'V-Neck T-Shirts', 'slug' => 'v-neck', 'image' => 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=800&q=80'],
+            ['name' => 'Oversized T-Shirts', 'slug' => 'oversized', 'image' => 'https://images.unsplash.com/photo-1554568218-0f1715e72254?auto=format&fit=crop&w=800&q=80'],
+        ];
 
-        \App\Models\Product::create([
-            'category_id' => $polo->id,
-            'name' => 'Royal Heritage Polo',
-            'slug' => 'royal-heritage-polo',
-            'description' => 'Sophisticated polo t-shirt with premium fabric and elegant fit.',
-            'price' => 899,
-            'image' => 'product-2.png',
-            'is_featured' => true
-        ]);
+        foreach ($categories as $cat) {
+            Category::firstOrCreate(['slug' => $cat['slug']], $cat);
+        }
 
-        \App\Models\Product::create([
-            'category_id' => $oversized->id,
-            'name' => 'Urban Vibes Oversized Tee',
-            'slug' => 'urban-vibes-oversized',
-            'description' => 'Trendy oversized fit for the modern street style enthusiast.',
-            'price' => 699,
-            'image' => 'product-1.png',
-            'is_featured' => true
-        ]);
+        // 3. Demo Products and Attributes
+        $this->call(DemoProductSeeder::class);
+
+        // 4. Additional Products from original DatabaseSeeder (if any unique ones)
+        // (The ones in DemoProductSeeder are better as they have actual local images)
     }
 }

@@ -40,6 +40,7 @@ class CartController extends Controller
             "front_image" => $front_image,
             "back_image" => $back_image,
             "notes" => $request->notes,
+            "variants" => $request->variants,
             "product_id" => $id
         ];
 

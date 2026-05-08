@@ -30,7 +30,7 @@
                     </td>
                     <td>{{ $order->created_at->format('M d, Y') }}</td>
                     <td>
-                        <button onclick="viewOrder({{ $order->id }})" style="color: blue; border: none; background: none; cursor: pointer;"><i class="fa-solid fa-eye"></i> View</button>
+                        <button onclick='viewOrder(@json($order))' style="color: blue; border: none; background: none; cursor: pointer;"><i class="fa-solid fa-eye"></i> View</button>
                     </td>
                 </tr>
             @endforeach
@@ -38,18 +38,32 @@
     </table>
 </div>
 
-<!-- View Order Modal (Simplified for now) -->
+<!-- View Order Modal -->
 <div id="viewModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000;">
-    <div style="background:#fff; width:800px; margin:50px auto; padding:40px; border-radius:15px; max-height: 90vh; overflow-y: auto;">
+    <div style="background:#fff; width:900px; margin:50px auto; padding:40px; border-radius:15px; max-height: 90vh; overflow-y: auto;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
             <h2>Order Details #<span id="modalOrderId"></span></h2>
             <button onclick="document.getElementById('viewModal').style.display='none'" style="border:none; background:none; font-size: 1.5rem; cursor:pointer;">&times;</button>
         </div>
         
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px;">
+            <div>
+                <h4>Shipping Details</h4>
+                <p id="modalCustomerName"></p>
+                <p id="modalCustomerPhone"></p>
+                <p id="modalCustomerAddress"></p>
+            </div>
+            <div>
+                <h4>Payment Info</h4>
+                <p>Method: <span id="modalPaymentMethod"></span></p>
+                <p>Transaction ID: <span id="modalTransactionId"></span></p>
+            </div>
+        </div>
+
         <form id="statusForm" method="POST" style="margin-bottom: 30px; display: flex; gap: 10px; align-items: center;">
             @csrf
             <label>Change Status:</label>
-            <select name="status" class="form-control" style="width: 200px;">
+            <select name="status" id="modalStatus" class="form-control" style="width: 200px;">
                 <option value="pending">Pending</option>
                 <option value="processing">Processing</option>
                 <option value="shipped">Shipped</option>
@@ -67,13 +81,48 @@
 </div>
 
 <script>
-    function viewOrder(id) {
-        document.getElementById('modalOrderId').innerText = id;
-        document.getElementById('statusForm').action = "/admin/orders/update-status/" + id;
+    function viewOrder(order) {
+        document.getElementById('modalOrderId').innerText = order.id;
+        document.getElementById('modalCustomerName').innerText = "Name: " + order.user.name;
+        document.getElementById('modalCustomerPhone').innerText = "Phone: " + order.phone;
+        document.getElementById('modalCustomerAddress').innerText = "Address: " + order.shipping_address + ", " + order.city + " - " + order.pincode;
+        document.getElementById('modalPaymentMethod').innerText = order.payment_method;
+        document.getElementById('modalTransactionId').innerText = order.transaction_id;
+        document.getElementById('modalStatus').value = order.status;
+        document.getElementById('statusForm').action = "/admin/orders/update-status/" + order.id;
+        
+        let itemsHtml = '<table style="width:100%; border-collapse:collapse;"><thead><tr style="text-align:left; border-bottom:2px solid #eee;"><th style="padding:10px">Product</th><th style="padding:10px">Price</th><th style="padding:10px">Qty</th><th style="padding:10px">Customizations</th></tr></thead><tbody>';
+        
+        order.items.forEach(item => {
+            let variants = '';
+            if(item.variant_details) {
+                let v = JSON.parse(item.variant_details);
+                Object.keys(v).forEach(k => variants += `<small><b>${k}:</b> ${v[k]}</small> `);
+            }
+
+            let images = '';
+            if(item.front_image) images += `<a href="/storage/${item.front_image}" target="_blank" style="font-size:0.7rem; color:blue;">Front View</a> `;
+            if(item.back_image) images += `<a href="/storage/${item.back_image}" target="_blank" style="font-size:0.7rem; color:blue;">Back View</a>`;
+
+            itemsHtml += `
+                <tr style="border-bottom:1px solid #eee;">
+                    <td style="padding:15px">
+                        <b>${item.product.name}</b><br>
+                        ${variants}
+                    </td>
+                    <td style="padding:15px">₹${item.price}</td>
+                    <td style="padding:15px">${item.quantity}</td>
+                    <td style="padding:15px">
+                        ${images}<br>
+                        <small>${item.customization_notes || 'No notes'}</small>
+                    </td>
+                </tr>
+            `;
+        });
+        
+        itemsHtml += '</tbody></table>';
+        document.getElementById('orderItemsList').innerHTML = itemsHtml;
         document.getElementById('viewModal').style.display = 'block';
-        // In a real app, you'd fetch item details via AJAX.
-        // For now, we'll show a message.
-        document.getElementById('orderItemsList').innerHTML = "<p>Loading items and customization images...</p>";
     }
 </script>
 @endsection

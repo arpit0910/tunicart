@@ -22,6 +22,7 @@ class CreateProductsTable extends Migration
             $table->decimal('price', 10, 2);
             $table->string('image')->nullable();
             $table->boolean('is_featured')->default(false);
+            $table->integer('stock')->default(10);
             $table->timestamps();
         });
     }
