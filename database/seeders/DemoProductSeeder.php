@@ -28,6 +28,7 @@ class DemoProductSeeder extends Seeder
             'category_id' => 1,
             'description' => 'A premium quality 100% cotton black t-shirt. Breathable and comfortable.',
             'image' => 'products/black_tshirt.png',
+            'back_image' => 'products/black_tshirt_back.png',
             'is_featured' => true
         ]);
         $p1->attributeValues()->sync(AttributeValue::whereIn('value', ['S', 'M', 'L', 'XL', 'Black'])->pluck('id'));
@@ -38,6 +39,7 @@ class DemoProductSeeder extends Seeder
             'category_id' => 1,
             'description' => 'Classic white tee, perfect for custom printing or everyday wear.',
             'image' => 'products/white_tshirt.png',
+            'back_image' => 'products/white_tshirt_back.png',
             'is_featured' => true
         ]);
         $p2->attributeValues()->sync(AttributeValue::whereIn('value', ['S', 'M', 'L', 'XL', 'White'])->pluck('id'));
@@ -48,6 +50,7 @@ class DemoProductSeeder extends Seeder
             'category_id' => 2,
             'description' => 'Elegance meets comfort in this classic navy blue polo shirt.',
             'image' => 'products/navy_polo.png',
+            'back_image' => 'products/navy_polo_back.png',
             'is_featured' => true
         ]);
         $p3->attributeValues()->sync(AttributeValue::whereIn('value', ['M', 'L', 'XL', 'Navy Blue'])->pluck('id'));

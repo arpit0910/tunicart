@@ -90,10 +90,21 @@ class AdminController extends Controller
             'description' => $request->description,
             'is_featured' => $request->has('is_featured'),
             'image' => $request->file('image') ? $request->file('image')->store('products', 'public') : null,
+            'back_image' => $request->file('back_image') ? $request->file('back_image')->store('products', 'public') : null,
         ]);
 
         if ($request->has('attribute_values')) {
-            $product->attributeValues()->sync($request->attribute_values);
+            $syncData = [];
+            foreach ($request->attribute_values as $valId) {
+                $syncData[$valId] = [];
+                if ($request->hasFile("variant_image_$valId")) {
+                    $syncData[$valId]['image'] = $request->file("variant_image_$valId")->store('variants', 'public');
+                }
+                if ($request->hasFile("variant_back_image_$valId")) {
+                    $syncData[$valId]['back_image'] = $request->file("variant_back_image_$valId")->store('variants', 'public');
+                }
+            }
+            $product->attributeValues()->sync($syncData);
         }
 
         return redirect()->back()->with('success', 'Product created successfully');
@@ -121,11 +132,30 @@ class AdminController extends Controller
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('products', 'public');
         }
+        if ($request->hasFile('back_image')) {
+            $data['back_image'] = $request->file('back_image')->store('products', 'public');
+        }
 
         $product->update($data);
 
         if ($request->has('attribute_values')) {
-            $product->attributeValues()->sync($request->attribute_values);
+            $syncData = [];
+            foreach ($request->attribute_values as $valId) {
+                $syncData[$valId] = [];
+                
+                // Keep existing images if no new one uploaded
+                $existing = $product->attributeValues()->where('attribute_value_id', $valId)->first();
+                if ($existing && $existing->pivot->image) $syncData[$valId]['image'] = $existing->pivot->image;
+                if ($existing && $existing->pivot->back_image) $syncData[$valId]['back_image'] = $existing->pivot->back_image;
+
+                if ($request->hasFile("variant_image_$valId")) {
+                    $syncData[$valId]['image'] = $request->file("variant_image_$valId")->store('variants', 'public');
+                }
+                if ($request->hasFile("variant_back_image_$valId")) {
+                    $syncData[$valId]['back_image'] = $request->file("variant_back_image_$valId")->store('variants', 'public');
+                }
+            }
+            $product->attributeValues()->sync($syncData);
         } else {
             $product->attributeValues()->detach();
         }

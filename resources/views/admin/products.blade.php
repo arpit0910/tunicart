@@ -67,9 +67,15 @@
                 <label>Description</label>
                 <textarea name="description" class="form-control" rows="3"></textarea>
             </div>
-            <div class="form-group">
-                <label>Image</label>
-                <input type="file" name="image" class="form-control">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div class="form-group">
+                    <label>Front Image</label>
+                    <input type="file" name="image" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Back Image</label>
+                    <input type="file" name="back_image" class="form-control">
+                </div>
             </div>
             
             <div class="form-group">
@@ -78,11 +84,19 @@
                     @foreach($attributes as $attr)
                         <div style="margin-bottom: 10px;">
                             <strong style="display: block; margin-bottom: 5px; color: var(--primary-color);">{{ $attr->name }}</strong>
-                            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px;">
                                 @foreach($attr->values as $val)
-                                    <label style="font-weight: normal; cursor: pointer; background: #f8f9fa; padding: 2px 8px; border-radius: 4px; border: 1px solid #eee;">
-                                        <input type="checkbox" name="attribute_values[]" value="{{ $val->id }}"> {{ $val->value }}
-                                    </label>
+                                    <div style="display: flex; flex-direction: column; gap: 5px; background: #f8f9fa; padding: 10px; border-radius: 8px; border: 1px solid #eee;">
+                                        <label style="font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px; margin-bottom: 0;">
+                                            <input type="checkbox" name="attribute_values[]" value="{{ $val->id }}" onchange="document.getElementById('variant_inputs_{{ $val->id }}').style.display = this.checked ? 'flex' : 'none'"> {{ $val->value }}
+                                        </label>
+                                        <div id="variant_inputs_{{ $val->id }}" style="display: none; flex-direction: column; gap: 5px; margin-top: 5px;">
+                                            <label style="font-size: 0.65rem; color: var(--text-light); text-transform: uppercase;">Front Image</label>
+                                            <input type="file" name="variant_image_{{ $val->id }}" class="form-control" style="font-size: 0.7rem; padding: 5px;">
+                                            <label style="font-size: 0.65rem; color: var(--text-light); text-transform: uppercase;">Back Image</label>
+                                            <input type="file" name="variant_back_image_{{ $val->id }}" class="form-control" style="font-size: 0.7rem; padding: 5px;">
+                                        </div>
+                                    </div>
                                 @endforeach
                             </div>
                         </div>
@@ -129,9 +143,15 @@
                 <label>Description</label>
                 <textarea name="description" id="edit_description" class="form-control" rows="3"></textarea>
             </div>
-            <div class="form-group">
-                <label>Image (Leave blank to keep current)</label>
-                <input type="file" name="image" class="form-control">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div class="form-group">
+                    <label>Front Image (Change)</label>
+                    <input type="file" name="image" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Back Image (Change)</label>
+                    <input type="file" name="back_image" class="form-control">
+                </div>
             </div>
             
             <div class="form-group">
@@ -140,11 +160,19 @@
                     @foreach($attributes as $attr)
                         <div style="margin-bottom: 10px;">
                             <strong style="display: block; margin-bottom: 5px; color: var(--primary-color);">{{ $attr->name }}</strong>
-                            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px;">
                                 @foreach($attr->values as $val)
-                                    <label style="font-weight: normal; cursor: pointer; background: #f8f9fa; padding: 2px 8px; border-radius: 4px; border: 1px solid #eee;">
-                                        <input type="checkbox" name="attribute_values[]" value="{{ $val->id }}" class="edit-attr-checkbox"> {{ $val->value }}
-                                    </label>
+                                    <div style="display: flex; flex-direction: column; gap: 5px; background: #f8f9fa; padding: 10px; border-radius: 8px; border: 1px solid #eee;">
+                                        <label style="font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px; margin-bottom: 0;">
+                                            <input type="checkbox" name="attribute_values[]" value="{{ $val->id }}" class="edit-attr-checkbox" onchange="document.getElementById('edit_variant_inputs_{{ $val->id }}').style.display = this.checked ? 'flex' : 'none'"> {{ $val->value }}
+                                        </label>
+                                        <div id="edit_variant_inputs_{{ $val->id }}" style="display: none; flex-direction: column; gap: 5px; margin-top: 5px;">
+                                            <label style="font-size: 0.65rem; color: var(--text-light); text-transform: uppercase;">Front Image</label>
+                                            <input type="file" name="variant_image_{{ $val->id }}" class="form-control" style="font-size: 0.7rem; padding: 5px;">
+                                            <label style="font-size: 0.65rem; color: var(--text-light); text-transform: uppercase;">Back Image</label>
+                                            <input type="file" name="variant_back_image_{{ $val->id }}" class="form-control" style="font-size: 0.7rem; padding: 5px;">
+                                        </div>
+                                    </div>
                                 @endforeach
                             </div>
                         </div>
@@ -172,9 +200,14 @@
         document.getElementById('edit_description').value = product.description;
         document.getElementById('edit_is_featured').checked = product.is_featured == 1;
         
-        // Reset checkboxes
+        // Reset checkboxes and inputs
         document.querySelectorAll('.edit-attr-checkbox').forEach(cb => {
-            cb.checked = selectedValues.includes(parseInt(cb.value));
+            const isChecked = selectedValues.includes(parseInt(cb.value));
+            cb.checked = isChecked;
+            const inputContainer = document.getElementById('edit_variant_inputs_' + cb.value);
+            if (inputContainer) {
+                inputContainer.style.display = isChecked ? 'flex' : 'none';
+            }
         });
 
         document.getElementById('editModal').style.display = 'block';

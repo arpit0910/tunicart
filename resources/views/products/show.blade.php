@@ -5,14 +5,16 @@
 @section('styles')
 <style>
     .variant-label {
-        padding: 8px 16px;
-        border: 2px solid #e2e8f0;
-        border-radius: 8px;
+        padding: 12px 20px;
+        border: 2px solid var(--glass-border);
+        border-radius: 12px;
         cursor: pointer;
-        font-weight: 600;
-        transition: all 0.2s;
+        font-weight: 700;
+        transition: var(--transition);
+        background: #fff;
         display: inline-block;
         user-select: none;
+        color: var(--black);
     }
     .variant-option input:checked + .variant-label {
         border-color: var(--primary-color);
@@ -32,12 +34,31 @@
         <div style="display: flex; gap: 50px; flex-wrap: wrap;" class="flex-responsive">
             <!-- Product Image -->
             <div style="flex: 1; min-width: 300px;" class="mobile-100">
-                <div class="product-image" style="height: 500px; border-radius: 20px; overflow: hidden;" class="mobile-height-auto">
-                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" id="mainImage">
+                <div class="product-image mobile-height-auto" style="height: 500px; border-radius: 20px; overflow: hidden; position: relative; background: #fff;">
+                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" id="mainImage" style="width: 100%; height: 100%; object-fit: cover;">
+                    
+                    <!-- Front Design Overlay -->
+                    <div id="frontDesignOverlay" class="design-overlay" style="position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%); width: 35%; height: 40%; pointer-events: none; display: none; z-index: 10;">
+                        <img src="" id="frontOverlayImg" style="width: 100%; height: 100%; object-fit: contain; opacity: 0.9; mix-blend-mode: multiply; filter: contrast(1.1) brightness(0.9);">
+                    </div>
+
+                    <!-- Back Design Overlay -->
+                    <div id="backDesignOverlay" class="design-overlay" style="position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%); width: 35%; height: 40%; pointer-events: none; display: none; z-index: 10;">
+                        <img src="" id="backOverlayImg" style="width: 100%; height: 100%; object-fit: contain; opacity: 0.9; mix-blend-mode: multiply; filter: contrast(1.1) brightness(0.9);">
+                    </div>
+
+                    <!-- Side Indicator Badge -->
+                    <div id="sideIndicator" style="position: absolute; bottom: 20px; left: 20px; background: var(--primary-color); color: var(--white); padding: 5px 15px; border-radius: 50px; font-size: 0.7rem; font-weight: 900; letter-spacing: 1px; display: none; text-transform: uppercase; z-index: 11;">
+                        Viewing Front
+                    </div>
                 </div>
-                <div style="display: flex; gap: 10px; margin-top: 20px;">
-                    <img src="{{ asset('storage/' . $product->image) }}" style="width: 80px; height: 80px; border-radius: 10px; cursor: pointer; border: 2px solid var(--primary-color);">
-                    <!-- Placeholder for back image if exists -->
+                <div class="product-thumbnails" style="display: flex; gap: 10px; margin-top: 20px;">
+                    <img src="{{ asset('storage/' . $product->image) }}" id="thumb-front" style="width: 80px; height: 80px; border-radius: 10px; cursor: pointer; border: 2px solid var(--primary-color); object-fit: cover;" onclick="changeImage(this.src, 'front')">
+                    @if($product->back_image)
+                        <img src="{{ asset('storage/' . $product->back_image) }}" id="thumb-back" style="width: 80px; height: 80px; border-radius: 10px; cursor: pointer; border: 2px solid transparent; object-fit: cover;" onclick="changeImage(this.src, 'back')">
+                    @else
+                        <img src="{{ asset('storage/' . $product->image) }}" id="thumb-back" style="width: 80px; height: 80px; border-radius: 10px; cursor: pointer; border: 2px solid transparent; object-fit: cover; display: none;" onclick="changeImage(this.src, 'back')">
+                    @endif
                 </div>
             </div>
 
@@ -65,6 +86,14 @@
                             <div id="front-preview" style="margin-top: 15px; display: none; position: relative;">
                                 <img src="" style="width: 100%; border-radius: 12px; border: 2px solid var(--accent-color);">
                             </div>
+                            <div style="margin-top: 15px;">
+                                <label style="display: block; margin-bottom: 8px; font-weight: 700; font-size: 0.75rem; color: var(--text-light); text-transform: uppercase;">Placement</label>
+                                <select name="front_placement" onchange="updatePlacement(this.value)" style="width: 100%; padding: 10px; border-radius: 10px; border: 1px solid var(--glass-border); background: #fff; font-size: 0.8rem; font-weight: 700; cursor: pointer;">
+                                    <option value="full">Center (Full)</option>
+                                    <option value="left">Left Chest (Pocket)</option>
+                                    <option value="right">Right Chest (Pocket)</option>
+                                </select>
+                            </div>
                         </div>
                         <div>
                             <label style="display: block; margin-bottom: 12px; font-weight: 700; font-size: 0.9rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px;">Back Design</label>
@@ -87,8 +116,12 @@
                                     <div style="display: flex; gap: 12px; flex-wrap: wrap;">
                                         @foreach($values as $val)
                                             <div class="variant-option">
-                                                <input type="radio" name="variants[{{ $attributeName }}]" value="{{ $val->value }}" id="variant_{{ $val->id }}" style="display: none;" {{ $loop->first ? 'checked' : '' }}>
-                                                <label for="variant_{{ $val->id }}" class="variant-label" style="padding: 12px 20px; border: 2px solid var(--glass-border); border-radius: 12px; cursor: pointer; font-weight: 700; transition: var(--transition); background: #fff;">
+                                                <input type="radio" name="variants[{{ $attributeName }}]" value="{{ $val->value }}" id="variant_{{ $val->id }}" style="display: none;" 
+                                                    {{ $loop->first ? 'checked' : '' }}
+                                                    data-image="{{ $val->pivot->image ? asset('storage/' . $val->pivot->image) : '' }}"
+                                                    data-back-image="{{ $val->pivot->back_image ? asset('storage/' . $val->pivot->back_image) : '' }}"
+                                                    onchange="updateVariantImages(this)">
+                                                <label for="variant_{{ $val->id }}" class="variant-label">
                                                     {{ $val->value }}
                                                 </label>
                                             </div>
@@ -206,11 +239,12 @@
                 </div>
         </div>
 
+    <div class="container">
         @if($related_products->count() > 0)
         <!-- Related Products -->
-        <div style="margin-top: 100px;">
+        <div style="margin-top: 100px; margin-bottom: 80px;">
             <h2 style="margin-bottom: 40px; font-size: 2rem; text-align: center;">You May Also <span style="color: var(--secondary-color);">Like</span></h2>
-            <div class="products-grid">
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 40px;">
                 @foreach($related_products as $rel)
                     <div class="product-card" onclick="window.location.href='{{ route('products.show', $rel->slug) }}'" style="cursor: pointer;">
                         <div class="product-image">
@@ -231,6 +265,76 @@
 
 @section('scripts')
 <script>
+    let currentViewSide = 'front';
+
+    function changeImage(src, side) {
+        currentViewSide = side;
+        document.getElementById('mainImage').src = src;
+        
+        // Update thumbnails
+        document.querySelectorAll('.product-thumbnails img').forEach(img => {
+            img.style.borderColor = (img.src === src ? 'var(--primary-color)' : 'transparent');
+        });
+
+        // Toggle Design Overlays
+        document.getElementById('frontDesignOverlay').style.display = (side === 'front' && document.getElementById('frontOverlayImg').src.includes('data:') ? 'block' : 'none');
+        document.getElementById('backDesignOverlay').style.display = (side === 'back' && document.getElementById('backOverlayImg').src.includes('data:') ? 'block' : 'none');
+        
+        // Update Side Indicator
+        const sideIndicator = document.getElementById('sideIndicator');
+        sideIndicator.style.display = 'block';
+        sideIndicator.innerText = side === 'front' ? 'Viewing Front' : 'Viewing Back';
+    }
+
+    function updateVariantImages(input) {
+        const frontImg = input.getAttribute('data-image');
+        const backImg = input.getAttribute('data-back-image');
+        
+        if (frontImg) {
+            document.getElementById('thumb-front').src = frontImg;
+            if (currentViewSide === 'front') {
+                document.getElementById('mainImage').src = frontImg;
+            }
+        }
+        
+        if (backImg) {
+            const thumbBack = document.getElementById('thumb-back');
+            if (thumbBack) {
+                thumbBack.src = backImg;
+                thumbBack.style.display = 'block';
+            }
+            if (currentViewSide === 'back') {
+                document.getElementById('mainImage').src = backImg;
+            }
+        }
+    }
+
+    function updatePlacement(value) {
+        const overlay = document.getElementById('frontDesignOverlay');
+        if (!overlay) return;
+
+        // Visual mapping for front placements
+        const placements = {
+            'full': { top: '45%', left: '50%', width: '35%', height: '40%' },
+            'left': { top: '35%', left: '40%', width: '12%', height: '12%' }, // Wearer's Left / Viewer's Right is standard, but here we use viewer's left
+            'right': { top: '35%', left: '60%', width: '12%', height: '12%' }
+        };
+
+        const config = placements[value];
+        if (config) {
+            overlay.style.top = config.top;
+            overlay.style.left = config.left;
+            overlay.style.width = config.width;
+            overlay.style.height = config.height;
+            
+            // Re-center indicator
+            overlay.style.transform = 'translate(-50%, -50%)';
+            
+            // Visual feedback
+            document.querySelector('.product-image').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }
+
     function toggleFaq(header) {
         const content = header.nextElementSibling;
         const icon = header.querySelector('i');
@@ -246,12 +350,31 @@
     function previewFile(input, previewId) {
         const preview = document.getElementById(previewId);
         const img = preview.querySelector('img');
+        const isFront = previewId.includes('front');
+        const overlayId = isFront ? 'frontOverlayImg' : 'backOverlayImg';
+        const overlayContainerId = isFront ? 'frontDesignOverlay' : 'backDesignOverlay';
+        
+        const overlayImg = document.getElementById(overlayId);
+        const designOverlay = document.getElementById(overlayContainerId);
+        const sideIndicator = document.getElementById('sideIndicator');
+        
         const file = input.files[0];
         const reader = new FileReader();
 
         reader.onloadend = function () {
             img.src = reader.result;
             preview.style.display = 'block';
+            
+            // Live Preview Overlay
+            overlayImg.src = reader.result;
+            
+            // Auto-switch view to the side being edited
+            const side = isFront ? 'front' : 'back';
+            const mainImgSrc = isFront ? document.getElementById('thumb-front').src : document.getElementById('thumb-back').src;
+            changeImage(mainImgSrc, side);
+            
+            // Visual feedback
+            document.querySelector('.product-image').scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
         if (file) {

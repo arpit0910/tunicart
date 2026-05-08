@@ -21,15 +21,15 @@
                         <h3 style="margin-bottom: 20px;">Order Status: <span style="color: var(--primary-color);">{{ strtoupper($order->status) }}</span></h3>
                         
                         <!-- Progress Bar -->
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 20px; position: relative; padding-top: 10px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 20px; position: relative; padding-top: 10px; gap: 5px;">
                             <div style="width: 100%; height: 6px; background: var(--glass-border); position: absolute; top: 20px; left: 0; z-index: 1; border-radius: 10px;"></div>
-                            <div style="width: {{ $order->status == 'delivered' ? '100%' : ($order->status == 'shipped' ? '66%' : ($order->status == 'processing' ? '33%' : '0%')) }}; height: 6px; background: var(--accent-color); position: absolute; top: 20px; left: 0; z-index: 2; transition: 1.5s cubic-bezier(0.23, 1, 0.32, 1); border-radius: 10px; box-shadow: 0 0 15px var(--accent-glow);"></div>
+                            <div style="width: {{ $order->status == 'delivered' ? '100%' : ($order->status == 'shipped' ? '75%' : ($order->status == 'processing' ? '50%' : '25%')) }}; height: 6px; background: var(--accent-color); position: absolute; top: 20px; left: 0; z-index: 2; transition: 1.5s cubic-bezier(0.23, 1, 0.32, 1); border-radius: 10px; box-shadow: 0 0 15px var(--accent-glow);"></div>
                             
                             @php $stages = ['Pending', 'Processing', 'Shipped', 'Delivered']; @endphp
                             @foreach($stages as $index => $stage)
-                                <div style="z-index: 3; text-align: center;">
-                                    <div style="width: 20px; height: 20px; background: {{ ($index * 33) <= ($order->status == 'delivered' ? 100 : ($order->status == 'shipped' ? 66 : ($order->status == 'processing' ? 33 : 0))) ? 'var(--accent-color)' : '#eee' }}; border: 4px solid #fff; border-radius: 50%; margin: 0 auto 8px; box-shadow: var(--shadow);"></div>
-                                    <span style="font-size: 0.75rem; font-weight: 800; color: {{ ($index * 33) <= ($order->status == 'delivered' ? 100 : ($order->status == 'shipped' ? 66 : ($order->status == 'processing' ? 33 : 0))) ? 'var(--black)' : 'var(--text-light)' }}; text-transform: uppercase; letter-spacing: 0.5px;">{{ $stage }}</span>
+                                <div style="z-index: 3; text-align: center; flex: 1;">
+                                    <div style="width: 16px; height: 16px; background: {{ ($index * 25 + 25) <= ($order->status == 'delivered' ? 100 : ($order->status == 'shipped' ? 75 : ($order->status == 'processing' ? 50 : 25))) ? 'var(--accent-color)' : '#eee' }}; border: 3px solid #fff; border-radius: 50%; margin: 0 auto 8px; box-shadow: var(--shadow);"></div>
+                                    <span style="font-size: clamp(0.5rem, 2vw, 0.7rem); font-weight: 800; color: {{ ($index * 25 + 25) <= ($order->status == 'delivered' ? 100 : ($order->status == 'shipped' ? 75 : ($order->status == 'processing' ? 50 : 25))) ? 'var(--black)' : 'var(--text-light)' }}; text-transform: uppercase; letter-spacing: 0px; display: block; white-space: nowrap;">{{ $stage }}</span>
                                 </div>
                             @endforeach
                         </div>

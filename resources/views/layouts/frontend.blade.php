@@ -14,36 +14,36 @@
 </head>
 
 <body>
-    <header style="background: var(--glass); border-bottom: 1px solid var(--glass-border); padding: 5px 0;">
+    <header style="background: var(--glass); border-bottom: 1px solid var(--glass-border); padding: 10px 0;">
         <div class="container">
-            <nav style="display: flex; justify-content: space-between; align-items: center;">
+            <nav style="display: flex; justify-content: space-between; align-items: center; min-height: 50px;">
                 <div class="logo">
-                    <a href="{{ url('/') }}">
+                    <a href="{{ url('/') }}" style="display: flex; align-items: center;">
                         <img src="{{ asset('images/logo.png') }}" alt="Tunicart Logo"
-                            style="height: 70px; width: auto; filter: drop-shadow(0 0 10px var(--accent-glow));">
+                            style="height: 60px; width: auto; filter: drop-shadow(0 0 10px var(--accent-glow));">
                     </a>
                 </div>
-                <div class="nav-links" style="display: flex; gap: 30px; align-items: center;">
-                    <a href="{{ url('/') }}" style="font-weight: 700; color: var(--black); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; {{ Request::is('/') ? 'color: var(--accent-color);' : '' }}">Home</a>
-                    <a href="{{ route('products.index') }}" style="font-weight: 700; color: var(--black); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; {{ Request::is('products*') ? 'color: var(--accent-color);' : '' }}">Shop</a>
-                    <a href="{{ url('/about') }}" style="font-weight: 700; color: var(--black); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px;">About</a>
-                    <a href="{{ url('/contact') }}" style="font-weight: 700; color: var(--black); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px;">Contact</a>
+                <div class="nav-links" style="display: flex; gap: 30px; align-items: center; height: 100%;">
+                    <a href="{{ url('/') }}" style="font-weight: 700; color: var(--black); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; line-height: 1; {{ Request::is('/') ? 'color: var(--accent-color);' : '' }}">Home</a>
+                    <a href="{{ route('products.index') }}" style="font-weight: 700; color: var(--black); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; line-height: 1; {{ Request::is('products*') ? 'color: var(--accent-color);' : '' }}">Shop</a>
+                    <a href="{{ url('/about') }}" style="font-weight: 700; color: var(--black); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; line-height: 1;">About</a>
+                    <a href="{{ url('/contact') }}" style="font-weight: 700; color: var(--black); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; line-height: 1;">Contact</a>
                 </div>
-                <div class="nav-icons" style="display: flex; gap: 20px; align-items: center; font-size: 1.2rem; color: var(--black);">
-                    <a href="{{ route('products.index') }}" style="transition: var(--transition);"><i class="fa-solid fa-magnifying-glass"></i></a>
-                    <a href="{{ route('wishlist.index') }}" style="transition: var(--transition); position: relative;">
+                <div class="nav-icons" style="display: flex; gap: 20px; align-items: center; font-size: 1.2rem; color: var(--black); height: 100%;">
+                    <a href="{{ route('products.index') }}" style="transition: var(--transition); display: flex; align-items: center;"><i class="fa-solid fa-magnifying-glass"></i></a>
+                    <a href="{{ route('wishlist.index') }}" style="transition: var(--transition); position: relative; display: flex; align-items: center;" class="mobile-hide">
                         <i class="fa-solid fa-heart"></i>
                     </a>
-                    <a href="{{ route('cart.index') }}" style="transition: var(--transition); position: relative;">
+                    <a href="{{ route('cart.index') }}" style="transition: var(--transition); position: relative; display: flex; align-items: center;" class="mobile-hide">
                         <i class="fa-solid fa-cart-shopping"></i>
                         @if(count(session('cart', [])) > 0)
                             <span style="position: absolute; -top: 8px; -right: 8px; background: var(--accent-color); color: var(--primary-color); font-size: 0.6rem; width: 15px; height: 15px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900;">{{ count(session('cart', [])) }}</span>
                         @endif
                     </a>
                     @auth
-                        <a href="{{ route('dashboard') }}" style="transition: var(--transition); color: var(--accent-color);"><i class="fa-solid fa-circle-user"></i></a>
+                        <a href="{{ route('dashboard') }}" style="transition: var(--transition); color: var(--accent-color); display: flex; align-items: center;"><i class="fa-solid fa-circle-user"></i></a>
                     @else
-                        <a href="{{ route('login') }}" class="btn btn-primary" style="padding: 10px 25px; font-size: 0.8rem; border-radius: 50px;">Login</a>
+                        <a href="{{ route('login') }}" class="btn btn-primary mobile-hide" style="padding: 10px 25px; font-size: 0.8rem; border-radius: 50px; line-height: 1; min-height: 40px;">Login</a>
                     @endauth
                 </div>
             </nav>
@@ -126,8 +126,10 @@
                     <p style="color: var(--text-light); margin-bottom: 20px;">Subscribe for exclusive high-tech drops.</p>
                     <form action="{{ route('subscribe') }}" method="POST" style="display: flex; gap: 10px; flex-wrap: wrap;">
                         @csrf
-                        <input type="email" name="email" placeholder="Your Email" required
-                            style="padding: 12px; border-radius: 8px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); color: var(--black); flex: 1; min-width: 200px;">
+                        <div style="flex: 1; min-width: 250px;" class="mobile-100">
+                            <input type="email" name="email" placeholder="Your Email" required
+                                style="padding: 12px; border-radius: 8px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); color: var(--black); width: 100%;">
+                        </div>
                         <button type="submit" class="btn btn-primary" style="padding: 12px 20px;">Join</button>
                     </form>
                 </div>

@@ -29,12 +29,12 @@
                                 The Future of Custom Apparel
                             </span>
                             <h1
-                                style="font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.1; margin-bottom: 25px; font-weight: 900; color: var(--black);">
+                                style="font-size: clamp(2rem, 8vw, 4rem); line-height: 1.1; margin-bottom: 25px; font-weight: 900; color: var(--black);">
                                 Print Your <span
                                     style="background: linear-gradient(135deg, var(--accent-color), #B8860B); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 20px var(--accent-glow);">Imagination</span>
                                 in High-Def
                             </h1>
-                            <p style="font-size: 1.1rem; color: var(--text-light); margin-bottom: 40px; max-width: 500px;">
+                            <p style="font-size: clamp(0.95rem, 3vw, 1.1rem); color: var(--text-light); margin-bottom: 40px; max-width: 500px;" class="mobile-center-text">
                                 Experience the next level of customization. Tunicart combines premium fabric technology with
                                 advanced digital printing to bring your vision to life.
                             </p>
@@ -235,27 +235,27 @@
         </div>
         <div class="container mobile-px-20">
             <div class="glass mobile-py-40"
-                style="padding: 80px 40px; border-radius: 40px; border: 2px solid var(--accent-color); position: relative; text-align: center; box-shadow: 0 20px 60px var(--accent-glow);">
+                style="padding: 60px 20px; border-radius: 40px; border: 2px solid var(--accent-color); position: relative; text-align: center; box-shadow: 0 20px 60px var(--accent-glow); margin-top: 20px;">
                 <div
-                    style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); background: var(--accent-color); color: var(--primary-color); padding: 5px 25px; border-radius: 50px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; font-size: 0.8rem;">
+                    style="position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: var(--accent-color); color: var(--primary-color); padding: 6px 20px; border-radius: 50px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; font-size: 0.7rem; white-space: nowrap; box-shadow: 0 5px 15px var(--accent-glow);">
                     Limited Time Phase
                 </div>
-                <h2 style="font-size: clamp(2rem, 5vw, 4rem); margin-bottom: 20px; line-height: 1; color: var(--black);">
+                <h2 style="font-size: clamp(1.8rem, 6vw, 3.5rem); margin-bottom: 15px; line-height: 1.2; color: var(--black);">
                     ACTIVATE <span style="color: var(--accent-color); text-shadow: 0 0 20px var(--accent-glow);">20% OFF</span></h2>
-                <p style="font-size: 1.2rem; color: var(--text-light); margin-bottom: 40px;">Upgrade your wardrobe with our
+                <p style="font-size: clamp(0.9rem, 3vw, 1.1rem); color: var(--text-light); margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto;">Upgrade your wardrobe with our
                     inaugural collection discount.</p>
 
 
-                <div style="display: inline-flex; align-items: center; gap: 20px; background: rgba(var(--primary-rgb), 0.05); padding: 15px 30px; border-radius: 15px; border: 1px dashed var(--accent-color); margin-bottom: 40px; flex-wrap: wrap; justify-content: center;"
+                <div style="display: inline-flex; align-items: center; gap: 15px; background: rgba(var(--primary-rgb), 0.05); padding: 12px 25px; border-radius: 15px; border: 1px dashed var(--accent-color); margin-bottom: 35px; flex-wrap: wrap; justify-content: center;"
                     class="mobile-100">
-                    <span style="color: var(--text-light); font-size: 0.9rem; font-weight: 600;">ACCESS CODE:</span>
+                    <span style="color: var(--text-light); font-size: 0.8rem; font-weight: 600;">ACCESS CODE:</span>
                     <span
-                        style="font-size: 1.8rem; font-weight: 900; color: var(--primary-color); letter-spacing: 4px;">TUNICART20</span>
+                        style="font-size: clamp(1.2rem, 5vw, 1.8rem); font-weight: 900; color: var(--primary-color); letter-spacing: 3px;">TUNICART20</span>
                 </div>
 
                 <div>
                     <a href="{{ route('products.index') }}" class="btn btn-primary"
-                        style="padding: 20px 60px; font-size: 1.1rem; border-radius: 50px; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); box-shadow: 0 10px 40px var(--accent-glow);">Redeem Now <i
+                        style="padding: 15px 40px; font-size: clamp(0.85rem, 3vw, 1rem); border-radius: 50px; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); box-shadow: 0 10px 40px var(--accent-glow);">Redeem Now <i
                             class="fa-solid fa-arrow-right" style="margin-left: 10px;"></i></a>
                 </div>
             </div>

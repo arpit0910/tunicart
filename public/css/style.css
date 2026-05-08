@@ -104,6 +104,12 @@ p {
     width: 100%;
 }
 
+@media (max-width: 576px) {
+    .container {
+        padding: 0 15px;
+    }
+}
+
 /* Responsive Utilities */
 .flex-responsive {
     display: flex;
@@ -133,10 +139,15 @@ p {
     .mobile-100 {
         width: 100% !important;
         min-width: 0 !important;
+        flex: none !important;
     }
 
     .mobile-grid-1 {
         grid-template-columns: 1fr !important;
+    }
+
+    .mobile-center-text {
+        text-align: center !important;
     }
 }
 
@@ -219,9 +230,21 @@ nav {
     gap: 20px;
     align-items: center;
     color: var(--black);
+    height: 100%;
+}
+
+.nav-icons i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20px;
+    width: 20px;
 }
 
 .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     padding: 12px 30px;
     border-radius: 12px;
     font-weight: 700;
@@ -231,6 +254,7 @@ nav {
     text-transform: uppercase;
     font-size: 0.85rem;
     letter-spacing: 1px;
+    line-height: 1;
 }
 
 .btn-primary {
@@ -624,19 +648,33 @@ body::before {
     .hero {
         flex-direction: column;
         text-align: center;
-        padding: 50px 0;
+        padding: 40px 0;
     }
 
     .hero-content h1 {
-        font-size: 2.5rem;
+        font-size: clamp(2rem, 8vw, 3rem);
     }
 
     .hero-content p {
         margin: 0 auto 30px;
+        font-size: 1rem;
     }
 
     .nav-links {
-        display: none;
+        display: none !important;
+    }
+
+    .nav-icons {
+        gap: 15px !important;
+    }
+
+    .nav-icons a {
+        font-size: 1.1rem;
+    }
+
+    .nav-icons .btn-primary {
+        padding: 8px 15px !important;
+        font-size: 0.7rem !important;
     }
 
     .mobile-nav {
@@ -645,10 +683,15 @@ body::before {
 
     .fab-cart {
         display: flex;
+        bottom: 90px;
+        right: 15px;
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
     }
 
     .section {
-        padding: 50px 0;
+        padding: 40px 0;
     }
 
     .footer-grid {
@@ -658,6 +701,10 @@ body::before {
 
     .footer-col .social-links {
         justify-content: center;
+    }
+
+    .section-title h2 {
+        font-size: clamp(1.8rem, 6vw, 2.5rem);
     }
 }
 

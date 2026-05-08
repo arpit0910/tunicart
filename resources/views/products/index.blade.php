@@ -12,8 +12,8 @@
 
         <div style="display: flex; gap: 40px; margin-top: 50px; flex-wrap: wrap;" class="flex-responsive">
             <!-- Filters Sidebar -->
-            <div style="flex: 1; min-width: 280px;" class="mobile-100">
-                <div class="glass" style="padding: 35px; border-radius: 24px; position: sticky; top: 120px; border: 1px solid var(--glass-border); box-shadow: var(--shadow);">
+            <div style="flex: 1; min-width: 250px;" class="mobile-100">
+                <div class="glass mobile-px-20" style="padding: 35px; border-radius: 24px; position: sticky; top: 100px; border: 1px solid var(--glass-border); box-shadow: var(--shadow);">
                     <form action="{{ route('products.index') }}" method="GET" id="filterForm">
                         <h3 style="margin-bottom: 30px; font-size: 1.4rem; font-weight: 800; display: flex; align-items: center; gap: 12px; color: var(--black);">
                             <i class="fa-solid fa-sliders" style="color: var(--accent-color);"></i> Filters
