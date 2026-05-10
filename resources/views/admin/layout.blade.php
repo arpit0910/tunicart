@@ -12,7 +12,8 @@
         body { background: #f8f9fa; display: flex; min-height: 100vh; font-family: 'Outfit', sans-serif; color: var(--black); }
         .sidebar { width: 280px; background: var(--primary-color); color: #fff; padding: 40px 0; display: flex; flex-direction: column; position: sticky; top: 0; height: 100vh; box-shadow: 10px 0 30px rgba(0,0,0,0.1); }
         .sidebar-brand { padding: 0 40px 40px; font-size: 1.8rem; font-weight: 800; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 30px; letter-spacing: -1px; color: var(--accent-color); }
-        .sidebar-menu { list-style: none; flex: 1; overflow-y: auto; padding-bottom: 40px; }
+        .sidebar-menu { list-style: none; flex: 1; overflow-y: auto; padding-bottom: 40px; -ms-overflow-style: none; scrollbar-width: none; }
+        .sidebar-menu::-webkit-scrollbar { display: none; }
         .sidebar-menu li a { display: flex; align-items: center; gap: 15px; padding: 16px 40px; color: rgba(255,255,255,0.6); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); font-weight: 600; text-decoration: none; border-left: 4px solid transparent; }
         .sidebar-menu li a:hover { color: #fff; background: rgba(255,255,255,0.03); }
         .sidebar-menu li a.active { background: rgba(212, 175, 55, 0.08); color: var(--accent-color); border-left-color: var(--accent-color); font-weight: 800; }
@@ -39,6 +40,8 @@
             <li><a href="{{ route('admin.attributes') }}" class="{{ Route::is('admin.attributes') ? 'active' : '' }}"><i class="fa-solid fa-tags"></i> Product Attributes</a></li>
             <li><a href="{{ route('admin.banners') }}" class="{{ Route::is('admin.banners') ? 'active' : '' }}"><i class="fa-solid fa-image"></i> Banners</a></li>
             <li><a href="{{ route('admin.orders') }}" class="{{ Route::is('admin.orders') ? 'active' : '' }}"><i class="fa-solid fa-truck"></i> Manage Orders</a></li>
+            <li><a href="{{ route('admin.customers') }}" class="{{ Route::is('admin.customers') ? 'active' : '' }}"><i class="fa-solid fa-user-group"></i> Customers</a></li>
+            <li><a href="{{ route('admin.reviews') }}" class="{{ Route::is('admin.reviews') ? 'active' : '' }}"><i class="fa-solid fa-star-half-stroke"></i> Reviews</a></li>
             <li><a href="{{ route('admin.coupons') }}" class="{{ Route::is('admin.coupons') ? 'active' : '' }}"><i class="fa-solid fa-ticket"></i> Coupons</a></li>
             <li><a href="{{ route('admin.faqs') }}" class="{{ Route::is('admin.faqs') ? 'active' : '' }}"><i class="fa-solid fa-circle-question"></i> FAQs</a></li>
             <li><a href="{{ route('admin.testimonials') }}" class="{{ Route::is('admin.testimonials') ? 'active' : '' }}"><i class="fa-solid fa-comment-dots"></i> Testimonials</a></li>

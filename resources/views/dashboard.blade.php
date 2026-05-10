@@ -14,6 +14,11 @@
                         <li><a href="#" style="font-weight: 700; color: var(--accent-color); display: flex; align-items: center; gap: 10px;">
                             <i class="fa-solid fa-gauge-high"></i> Dashboard
                         </a></li>
+                        @if(Auth::user()->is_admin)
+                            <li><a href="{{ route('admin.dashboard') }}" style="display: flex; align-items: center; gap: 10px; color: var(--accent-color); font-weight: 800; background: rgba(212, 175, 55, 0.1); padding: 10px; border-radius: 8px;">
+                                <i class="fa-solid fa-user-shield"></i> Admin Panel
+                            </a></li>
+                        @endif
                         <li><a href="#" style="display: flex; align-items: center; gap: 10px; color: var(--text-light); transition: var(--transition);">
                             <i class="fa-solid fa-box"></i> My Orders
                         </a></li>

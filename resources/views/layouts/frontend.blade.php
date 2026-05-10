@@ -24,39 +24,61 @@
                     </a>
                 </div>
                 <div class="nav-links" style="display: flex; gap: 30px; align-items: center; height: 100%;">
-                    <a href="{{ url('/') }}" style="font-weight: 700; color: var(--black); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; line-height: 1; {{ Request::is('/') ? 'color: var(--accent-color);' : '' }}">Home</a>
-                    <a href="{{ route('products.index') }}" style="font-weight: 700; color: var(--black); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; line-height: 1; {{ Request::is('products*') ? 'color: var(--accent-color);' : '' }}">Shop</a>
-                    <a href="{{ url('/about') }}" style="font-weight: 700; color: var(--black); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; line-height: 1;">About</a>
-                    <a href="{{ url('/contact') }}" style="font-weight: 700; color: var(--black); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; line-height: 1;">Contact</a>
+                    <a href="{{ url('/') }}"
+                        style="font-weight: 700; color: var(--black); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; line-height: 1; {{ Request::is('/') ? 'color: var(--accent-color);' : '' }}">Home</a>
+                    <a href="{{ route('products.index') }}"
+                        style="font-weight: 700; color: var(--black); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; line-height: 1; {{ Request::is('products*') ? 'color: var(--accent-color);' : '' }}">Shop</a>
+                    <a href="{{ url('/about') }}"
+                        style="font-weight: 700; color: var(--black); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; line-height: 1;">About</a>
+                    <a href="{{ url('/contact') }}"
+                        style="font-weight: 700; color: var(--black); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; line-height: 1;">Contact</a>
                 </div>
-                <div class="nav-icons" style="display: flex; gap: 20px; align-items: center; font-size: 1.2rem; color: var(--black); height: 100%;">
-                    <a href="{{ route('products.index') }}" style="transition: var(--transition); display: flex; align-items: center;"><i class="fa-solid fa-magnifying-glass"></i></a>
-                    <a href="{{ route('wishlist.index') }}" style="transition: var(--transition); position: relative; display: flex; align-items: center;" class="mobile-hide">
+                <div class="nav-icons"
+                    style="display: flex; gap: 20px; align-items: center; font-size: 1.2rem; color: var(--black); height: 100%;">
+                    <a href="{{ route('products.index') }}"
+                        style="transition: var(--transition); display: flex; align-items: center;"><i
+                            class="fa-solid fa-magnifying-glass"></i></a>
+                    <a href="{{ route('wishlist.index') }}"
+                        style="transition: var(--transition); position: relative; display: flex; align-items: center;"
+                        class="mobile-hide">
                         <i class="fa-solid fa-heart"></i>
                     </a>
-                    <a href="{{ route('cart.index') }}" style="transition: var(--transition); position: relative; display: flex; align-items: center;" class="mobile-hide">
+                    <a href="{{ route('cart.index') }}"
+                        style="transition: var(--transition); position: relative; display: flex; align-items: center;"
+                        class="mobile-hide">
                         <i class="fa-solid fa-cart-shopping"></i>
-                        @if(count(session('cart', [])) > 0)
-                            <span style="position: absolute; -top: 8px; -right: 8px; background: var(--accent-color); color: var(--primary-color); font-size: 0.6rem; width: 15px; height: 15px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900;">{{ count(session('cart', [])) }}</span>
+                        @if (count(session('cart', [])) > 0)
+                            <span
+                                style="position: absolute; -top: 8px; -right: 8px; background: var(--accent-color); color: var(--primary-color); font-size: 0.6rem; width: 15px; height: 15px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900;">{{ count(session('cart', [])) }}</span>
                         @endif
                     </a>
                     @auth
-                        <a href="{{ route('dashboard') }}" style="transition: var(--transition); color: var(--accent-color); display: flex; align-items: center;"><i class="fa-solid fa-circle-user"></i></a>
+                        @if (Auth::user()->is_admin)
+                            <a href="{{ route('admin.dashboard') }}"
+                                style="transition: var(--transition); color: var(--accent-color); font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">Dashboard</a>
+                        @else
+                            <a href="{{ route('dashboard') }}"
+                                style="transition: var(--transition); color: var(--accent-color); display: flex; align-items: center;"><i
+                                    class="fa-solid fa-circle-user"></i></a>
+                        @endif
                     @else
-                        <a href="{{ route('login') }}" class="btn btn-primary mobile-hide" style="padding: 10px 25px; font-size: 0.8rem; border-radius: 50px; line-height: 1; min-height: 40px;">Login</a>
+                        <a href="{{ route('login') }}" class="btn btn-primary mobile-hide"
+                            style="padding: 10px 25px; font-size: 0.8rem; border-radius: 50px; line-height: 1; min-height: 40px;">Login</a>
                     @endauth
                 </div>
             </nav>
         </div>
     </header>
 
-    @if(session('success'))
-        <div style="background: var(--accent-color); color: var(--primary-color); padding: 12px; text-align: center; font-weight: 900; position: fixed; top: 0; width: 100%; z-index: 9999; box-shadow: 0 5px 20px var(--accent-glow); text-transform: uppercase; letter-spacing: 1px; font-size: 0.85rem;">
+    @if (session('success'))
+        <div
+            style="background: var(--accent-color); color: var(--primary-color); padding: 12px; text-align: center; font-weight: 900; position: fixed; top: 0; width: 100%; z-index: 9999; box-shadow: 0 5px 20px var(--accent-glow); text-transform: uppercase; letter-spacing: 1px; font-size: 0.85rem;">
             <i class="fa-solid fa-circle-check" style="margin-right: 10px;"></i> {{ session('success') }}
         </div>
     @endif
-    @if(session('error'))
-        <div style="background: #dc2626; color: white; padding: 12px; text-align: center; font-weight: 900; position: fixed; top: 0; width: 100%; z-index: 9999; text-transform: uppercase; letter-spacing: 1px; font-size: 0.85rem;">
+    @if (session('error'))
+        <div
+            style="background: #dc2626; color: white; padding: 12px; text-align: center; font-weight: 900; position: fixed; top: 0; width: 100%; z-index: 9999; text-transform: uppercase; letter-spacing: 1px; font-size: 0.85rem;">
             <i class="fa-solid fa-triangle-exclamation" style="margin-right: 10px;"></i> {{ session('error') }}
         </div>
     @endif
@@ -106,10 +128,14 @@
                 <div class="footer-col">
                     <h4 style="color: var(--black); margin-bottom: 25px;">Explore</h4>
                     <ul>
-                        <li style="margin-bottom: 12px;"><a href="{{ route('products.index') }}" style="color: var(--text-light);">Round Neck</a></li>
-                        <li style="margin-bottom: 12px;"><a href="{{ route('products.index') }}" style="color: var(--text-light);">Polo T-Shirts</a></li>
-                        <li style="margin-bottom: 12px;"><a href="{{ route('products.index') }}" style="color: var(--text-light);">Oversized Tees</a></li>
-                        <li style="margin-bottom: 12px;"><a href="{{ route('products.index') }}" style="color: var(--text-light);">Custom Print</a></li>
+                        <li style="margin-bottom: 12px;"><a href="{{ route('products.index') }}"
+                                style="color: var(--text-light);">Round Neck</a></li>
+                        <li style="margin-bottom: 12px;"><a href="{{ route('products.index') }}"
+                                style="color: var(--text-light);">Polo T-Shirts</a></li>
+                        <li style="margin-bottom: 12px;"><a href="{{ route('products.index') }}"
+                                style="color: var(--text-light);">Oversized Tees</a></li>
+                        <li style="margin-bottom: 12px;"><a href="{{ route('products.index') }}"
+                                style="color: var(--text-light);">Custom Print</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -118,13 +144,16 @@
                         <li><a href="{{ url('/about') }}" style="color: var(--text-light);">About Us</a></li>
                         <li><a href="{{ url('/contact') }}" style="color: var(--text-light);">Contact Us</a></li>
                         <li><a href="{{ url('/faq') }}" style="color: var(--text-light);">FAQ Center</a></li>
-                        <li><a href="{{ url('/track-order') }}" style="color: var(--text-light);">Track Order</a></li>
+                        <li><a href="{{ url('/track-order') }}" style="color: var(--text-light);">Track Order</a>
+                        </li>
                     </ul>
                 </div>
                 <div class="footer-col">
                     <h4 style="color: var(--black); margin-bottom: 25px;">Join the Drop</h4>
-                    <p style="color: var(--text-light); margin-bottom: 20px;">Subscribe for exclusive high-tech drops.</p>
-                    <form action="{{ route('subscribe') }}" method="POST" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <p style="color: var(--text-light); margin-bottom: 20px;">Subscribe for exclusive high-tech drops.
+                    </p>
+                    <form action="{{ route('subscribe') }}" method="POST"
+                        style="display: flex; gap: 10px; flex-wrap: wrap;">
                         @csrf
                         <div style="flex: 1; min-width: 250px;" class="mobile-100">
                             <input type="email" name="email" placeholder="Your Email" required

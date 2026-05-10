@@ -13,11 +13,16 @@ class AdminUserSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::create([
+        \App\Models\User::updateOrCreate(['email' => 'admin@tunicart.com'], [
             'name' => 'Admin Tunicart',
-            'email' => 'admin@tunicart.com',
             'password' => \Hash::make('admin123'),
             'is_admin' => true
+        ]);
+
+        \App\Models\User::updateOrCreate(['email' => 'customer@example.com'], [
+            'name' => 'John Doe',
+            'password' => \Hash::make('customer123'),
+            'is_admin' => false
         ]);
     }
 }

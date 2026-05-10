@@ -22,6 +22,10 @@
                     <td>{{ $sub->created_at->format('d M Y, h:i A') }}</td>
                     <td>
                         <a href="mailto:{{ $sub->email }}" style="color: blue; text-decoration: none; margin-right: 15px;"><i class="fa-solid fa-envelope"></i> Send Email</a>
+                        <form action="{{ route('admin.subscribers.delete', $sub->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Remove this email from mailing list?')">
+                            @csrf
+                            <button type="submit" style="color: red; border:none; background:none; cursor:pointer;"><i class="fa-solid fa-trash"></i></button>
+                        </form>
                     </td>
                 </tr>
             @empty

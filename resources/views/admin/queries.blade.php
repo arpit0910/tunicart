@@ -34,11 +34,15 @@
                     </td>
                     <td>
                         @if($query->status == 'pending')
-                            <form action="{{ route('admin.queries.update-status', $query->id) }}" method="POST">
+                            <form action="{{ route('admin.queries.update-status', $query->id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 <button type="submit" class="btn btn-primary" style="padding: 5px 10px; font-size: 0.7rem;">Mark Replied</button>
                             </form>
                         @endif
+                        <form action="{{ route('admin.queries.delete', $query->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Delete this query?')">
+                            @csrf
+                            <button type="submit" style="color: red; border:none; background:none; cursor:pointer; margin-left: 10px;"><i class="fa-solid fa-trash"></i></button>
+                        </form>
                     </td>
                 </tr>
             @endforeach

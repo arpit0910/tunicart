@@ -77,6 +77,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     
     // Subscribers
     Route::get('/subscribers', [AdminController::class, 'subscribers'])->name('admin.subscribers');
+    Route::post('/subscribers/delete/{id}', [AdminController::class, 'subscriberDelete'])->name('admin.subscribers.delete');
 
     // Orders
     Route::get('/orders', [AdminController::class, 'orders'])->name('admin.orders');
@@ -90,6 +91,15 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     // Queries
     Route::get('/queries', [AdminController::class, 'queries'])->name('admin.queries');
     Route::post('/queries/update-status/{id}', [AdminController::class, 'updateQueryStatus'])->name('admin.queries.update-status');
+    Route::post('/queries/delete/{id}', [AdminController::class, 'queryDelete'])->name('admin.queries.delete');
+
+    // Customers
+    Route::get('/customers', [AdminController::class, 'customers'])->name('admin.customers');
+    Route::post('/customers/delete/{id}', [AdminController::class, 'customerDelete'])->name('admin.customers.delete');
+
+    // Reviews
+    Route::get('/reviews', [AdminController::class, 'reviews'])->name('admin.reviews');
+    Route::post('/reviews/delete/{id}', [AdminController::class, 'reviewDelete'])->name('admin.reviews.delete');
 });
 
 Route::get('/about', [PageController::class, 'about'])->name('about');

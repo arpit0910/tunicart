@@ -4,22 +4,31 @@
 
 @section('content')
     <!-- Hero Slider / Banner Section -->
-    <section class="hero-section reveal">
-        @forelse($banners as $banner)
-            <div class="hero bg-pattern"
-                style="background-image: url('{{ asset('storage/' . $banner->image) }}'); background-size: cover; background-position: center;">
-                <div class="container">
-                    <div class="hero-content">
-                        <span
-                            style="color: var(--primary-color); font-weight: 700; text-transform: uppercase; letter-spacing: 2px;">{{ $banner->sub_title }}</span>
-                        <h1>{{ $banner->title }}</h1>
-                        <div style="display: flex; gap: 20px;">
-                            <a href="{{ $banner->link ?? route('products.index') }}" class="btn btn-primary">Explore Now</a>
+    <section class="hero-slider" style="position: relative; overflow: hidden; height: 80vh;">
+        <div class="slider-container" style="display: flex; transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1); height: 100%;">
+            @forelse($banners as $banner)
+                <div class="slider-slide {{ $banner->display_on === 'web' ? 'web-only' : ($banner->display_on === 'mobile' ? 'mobile-only' : '') }}" style="flex: 0 0 100%; height: 100%; position: relative;">
+                    <div class="hero bg-pattern"
+                        style="background-image: url('{{ Str::startsWith($banner->image, 'http') ? $banner->image : asset('storage/' . $banner->image) }}'); background-size: cover; background-position: center; height: 100%; display: flex; align-items: center;">
+                        <div class="container">
+                            <div class="hero-content" style="max-width: 600px; color: {{ $banner->text_color ?? 'var(--black)' }};">
+                                <span style="display: inline-block; padding: 6px 15px; background: rgba(var(--primary-rgb), 0.1); border: 1px solid {{ $banner->text_color ?? 'var(--primary-color)' }}; color: {{ $banner->text_color ?? 'var(--primary-color)' }}; border-radius: 50px; font-weight: 700; font-size: 0.8rem; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px;">
+                                    {{ $banner->sub_title }}
+                                </span>
+                                <h1 style="font-size: clamp(2.5rem, 8vw, 4.5rem); line-height: 1.1; margin-bottom: 20px; font-weight: 900; color: {{ $banner->text_color ?? 'var(--black)' }};">
+                                    {{ $banner->title }}
+                                </h1>
+                                <p style="font-size: 1.1rem; margin-bottom: 30px; opacity: 0.9; color: {{ $banner->text_color ?? 'var(--text-light)' }}; font-weight: 600;">
+                                    {{ $banner->description }}
+                                </p>
+                                <div style="display: flex; gap: 20px;">
+                                    <a href="{{ $banner->link ?? route('products.index') }}" class="btn btn-primary" style="padding: 15px 35px; background: {{ $banner->text_color == '#ffffff' ? 'var(--accent-color)' : 'linear-gradient(135deg, var(--primary-color), var(--secondary-color))' }}; color: {{ $banner->text_color == '#ffffff' ? 'var(--primary-color)' : '#fff' }}; box-shadow: 0 10px 30px var(--accent-glow);">{{ $banner->button_text ?? 'Explore Now' }}</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        @empty
+            @empty
             <section class="hero" style="min-height: 80vh; display: flex; align-items: center; position: relative;">
                 <div class="container">
                     <div style="display: flex; align-items: center; gap: 50px; flex-wrap: wrap;" class="flex-responsive">
@@ -71,7 +80,90 @@
                 }
             </style>
         @endforelse
+        </div>
+
+        @if(count($banners) > 1)
+            <div class="slider-dots" style="position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 12px; z-index: 10;">
+                @foreach($banners as $index => $banner)
+                    <button class="slider-dot {{ $index === 0 ? 'active' : '' }}" onclick="goToSlide({{ $index }})" 
+                        style="width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--accent-color); background: transparent; cursor: pointer; transition: var(--transition);"></button>
+                @endforeach
+            </div>
+            
+            <button onclick="prevSlide()" style="position: absolute; left: 30px; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.1); border: 1px solid var(--glass-border); color: var(--black); width: 50px; height: 50px; border-radius: 50%; cursor: pointer; z-index: 10; backdrop-filter: blur(10px);"><i class="fa-solid fa-chevron-left"></i></button>
+            <button onclick="nextSlide()" style="position: absolute; right: 30px; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.1); border: 1px solid var(--glass-border); color: var(--black); width: 50px; height: 50px; border-radius: 50%; cursor: pointer; z-index: 10; backdrop-filter: blur(10px);"><i class="fa-solid fa-chevron-right"></i></button>
+        @endif
     </section>
+
+    <style>
+        .slider-dot.active { background: var(--accent-color) !important; width: 30px !important; border-radius: 10px !important; }
+    </style>
+
+    <script>
+        let currentSlide = 0;
+        const container = document.querySelector('.slider-container');
+        
+        function getVisibleSlides() {
+            return Array.from(document.querySelectorAll('.slider-slide')).filter(slide => {
+                return window.getComputedStyle(slide).display !== 'none';
+            });
+        }
+
+        function updateSlider() {
+            const visibleSlides = getVisibleSlides();
+            if (visibleSlides.length === 0) return;
+            
+            if (currentSlide >= visibleSlides.length) currentSlide = 0;
+            
+            // Hide all slides first, then show the visible ones in a flex container
+            // Actually, we can just transform based on the visible ones
+            const offset = currentSlide * 100;
+            container.style.transform = `translateX(-${offset}%)`;
+            
+            // Update dots
+            const dots = document.querySelectorAll('.slider-dot');
+            dots.forEach((dot, index) => {
+                const isVisible = window.getComputedStyle(document.querySelectorAll('.slider-slide')[index]).display !== 'none';
+                dot.style.display = isVisible ? 'block' : 'none';
+                dot.classList.toggle('active', index === currentSlide);
+            });
+        }
+
+        function nextSlide() {
+            const visibleSlides = getVisibleSlides();
+            if (visibleSlides.length <= 1) return;
+            currentSlide = (currentSlide + 1) % visibleSlides.length;
+            updateSlider();
+        }
+
+        function prevSlide() {
+            const visibleSlides = getVisibleSlides();
+            if (visibleSlides.length <= 1) return;
+            currentSlide = (currentSlide - 1 + visibleSlides.length) % visibleSlides.length;
+            updateSlider();
+        }
+
+        function goToSlide(index) {
+            // Find the index among visible slides
+            const visibleSlides = getVisibleSlides();
+            const allSlides = Array.from(document.querySelectorAll('.slider-slide'));
+            const targetSlide = allSlides[index];
+            const visibleIndex = visibleSlides.indexOf(targetSlide);
+            
+            if (visibleIndex !== -1) {
+                currentSlide = visibleIndex;
+                updateSlider();
+            }
+        }
+
+        window.addEventListener('resize', updateSlider);
+        document.addEventListener('DOMContentLoaded', updateSlider);
+
+        setInterval(() => {
+            const visibleSlides = getVisibleSlides();
+            if (visibleSlides.length > 1) nextSlide();
+        }, 6000);
+    </script>
 
     <!-- Why Choose Tunicart? (Features) -->
     <section class="section reveal" style="background: var(--bg-alt); position: relative;">

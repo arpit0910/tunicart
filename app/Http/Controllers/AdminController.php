@@ -23,9 +23,17 @@ class AdminController extends Controller
             'total_products' => Product::count(),
             'total_categories' => Category::count(),
             'total_orders' => Order::count(),
-            'total_revenue' => Order::sum('total_amount'),
+            'total_revenue' => Order::where('payment_status', 'paid')->sum('total_amount'),
+            'total_customers' => \App\Models\User::where('is_admin', false)->count(),
+            'pending_orders' => Order::where('status', 'pending')->count(),
+            'total_reviews' => \App\Models\Review::count(),
+            'pending_queries' => \App\Models\ContactQuery::where('status', 'pending')->count(),
         ];
-        return view('admin.dashboard', compact('stats'));
+
+        $recent_orders = Order::with('user')->latest()->take(5)->get();
+        $latest_reviews = \App\Models\Review::with(['user', 'product'])->latest()->take(5)->get();
+
+        return view('admin.dashboard', compact('stats', 'recent_orders', 'latest_reviews'));
     }
 
     public function categories()
@@ -182,6 +190,10 @@ class AdminController extends Controller
             'image' => $request->file('image')->store('banners', 'public'),
             'title' => $request->title,
             'sub_title' => $request->sub_title,
+            'description' => $request->description,
+            'button_text' => $request->button_text ?? 'Shop Now',
+            'text_color' => $request->text_color ?? '#1E0E00',
+            'display_on' => $request->display_on ?? 'both',
             'link' => $request->link,
         ]);
         return redirect()->back()->with('success', 'Banner created successfully');
@@ -193,6 +205,10 @@ class AdminController extends Controller
         $data = [
             'title' => $request->title,
             'sub_title' => $request->sub_title,
+            'description' => $request->description,
+            'button_text' => $request->button_text,
+            'text_color' => $request->text_color,
+            'display_on' => $request->display_on,
             'link' => $request->link,
         ];
         if ($request->hasFile('image')) {
@@ -358,5 +374,48 @@ class AdminController extends Controller
         ]);
         AttributeValue::create($request->all());
         return redirect()->back()->with('success', 'Attribute value added successfully');
+    }
+
+    // Customers
+    public function customers()
+    {
+        $customers = \App\Models\User::where('is_admin', false)->latest()->get();
+        return view('admin.customers', compact('customers'));
+    }
+
+    public function customerDelete($id)
+    {
+        $user = \App\Models\User::findOrFail($id);
+        if ($user->orders()->count() > 0) {
+            return redirect()->back()->with('error', 'Cannot delete customer with existing orders.');
+        }
+        $user->delete();
+        return redirect()->back()->with('success', 'Customer deleted successfully');
+    }
+
+    // Reviews
+    public function reviews()
+    {
+        $reviews = \App\Models\Review::with(['user', 'product'])->latest()->get();
+        return view('admin.reviews', compact('reviews'));
+    }
+
+    public function reviewDelete($id)
+    {
+        \App\Models\Review::findOrFail($id)->delete();
+        return redirect()->back()->with('success', 'Review deleted successfully');
+    }
+
+    // Subscribers
+    public function subscriberDelete($id)
+    {
+        \App\Models\Subscriber::findOrFail($id)->delete();
+        return redirect()->back()->with('success', 'Subscriber removed successfully');
+    }
+
+    public function queryDelete($id)
+    {
+        \App\Models\ContactQuery::findOrFail($id)->delete();
+        return redirect()->back()->with('success', 'Query deleted successfully');
     }
 }

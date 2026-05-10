@@ -30,6 +30,16 @@
     box-shadow: var(--shadow);
 }
 
+.web-only { display: block !important; }
+.mobile-only { display: none !important; }
+.mobile-hide { display: block !important; }
+
+@media (max-width: 991px) {
+    .web-only { display: none !important; }
+    .mobile-only { display: block !important; }
+    .mobile-hide { display: none !important; }
+}
+
 * {
     margin: 0;
     padding: 0;

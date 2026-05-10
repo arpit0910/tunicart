@@ -16,10 +16,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // 1. Admin User
-        if (!User::where('email', 'admin@tunicart.com')->exists()) {
-            $this->call(AdminUserSeeder::class);
-        }
+        // 1. Users
+        $this->call(AdminUserSeeder::class);
 
         // 2. Categories
         $categories = [
@@ -36,7 +34,7 @@ class DatabaseSeeder extends Seeder
         // 3. Demo Products and Attributes
         $this->call(DemoProductSeeder::class);
 
-        // 4. Additional Products from original DatabaseSeeder (if any unique ones)
-        // (The ones in DemoProductSeeder are better as they have actual local images)
+        // 4. Banners
+        $this->call(BannerSeeder::class);
     }
 }
