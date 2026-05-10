@@ -88,10 +88,12 @@
                             </div>
                             <div style="margin-top: 15px;">
                                 <label style="display: block; margin-bottom: 8px; font-weight: 700; font-size: 0.75rem; color: var(--text-light); text-transform: uppercase;">Placement</label>
-                                <select name="front_placement" onchange="updatePlacement(this.value)" style="width: 100%; padding: 10px; border-radius: 10px; border: 1px solid var(--glass-border); background: #fff; font-size: 0.8rem; font-weight: 700; cursor: pointer;">
-                                    <option value="full">Center (Full)</option>
-                                    <option value="left">Left Chest (Pocket)</option>
-                                    <option value="right">Right Chest (Pocket)</option>
+                                <select name="front_placement" onchange="updatePlacement(this.value, 'front')" style="width: 100%; padding: 10px; border-radius: 10px; border: 1px solid var(--glass-border); background: #fff; font-size: 0.8rem; font-weight: 700; cursor: pointer;">
+                                    <option value="center">Center</option>
+                                    <option value="top">Top</option>
+                                    <option value="bottom">Bottom</option>
+                                    <option value="left">Left Chest</option>
+                                    <option value="right">Right Chest</option>
                                 </select>
                             </div>
                         </div>
@@ -104,6 +106,14 @@
                             </div>
                             <div id="back-preview" style="margin-top: 15px; display: none; position: relative;">
                                 <img src="" style="width: 100%; border-radius: 12px; border: 2px solid var(--accent-color);">
+                            </div>
+                            <div style="margin-top: 15px;">
+                                <label style="display: block; margin-bottom: 8px; font-weight: 700; font-size: 0.75rem; color: var(--text-light); text-transform: uppercase;">Placement</label>
+                                <select name="back_placement" onchange="updatePlacement(this.value, 'back')" style="width: 100%; padding: 10px; border-radius: 10px; border: 1px solid var(--glass-border); background: #fff; font-size: 0.8rem; font-weight: 700; cursor: pointer;">
+                                    <option value="center">Center</option>
+                                    <option value="top">Top</option>
+                                    <option value="bottom">Bottom</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -309,14 +319,16 @@
         }
     }
 
-    function updatePlacement(value) {
-        const overlay = document.getElementById('frontDesignOverlay');
+    function updatePlacement(value, side = 'front') {
+        const overlay = document.getElementById(side + 'DesignOverlay');
         if (!overlay) return;
 
-        // Visual mapping for front placements
+        // Visual mapping for placements
         const placements = {
-            'full': { top: '45%', left: '50%', width: '35%', height: '40%' },
-            'left': { top: '35%', left: '40%', width: '12%', height: '12%' }, // Wearer's Left / Viewer's Right is standard, but here we use viewer's left
+            'center': { top: '45%', left: '50%', width: '35%', height: '40%' },
+            'top': { top: '30%', left: '50%', width: '25%', height: '25%' },
+            'bottom': { top: '65%', left: '50%', width: '25%', height: '25%' },
+            'left': { top: '35%', left: '40%', width: '12%', height: '12%' },
             'right': { top: '35%', left: '60%', width: '12%', height: '12%' }
         };
 
@@ -331,7 +343,7 @@
             overlay.style.transform = 'translate(-50%, -50%)';
             
             // Visual feedback
-            document.querySelector('.product-image').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            // document.querySelector('.product-image').scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
     }
 
@@ -371,6 +383,13 @@
             // Auto-switch view to the side being edited
             const side = isFront ? 'front' : 'back';
             const mainImgSrc = isFront ? document.getElementById('thumb-front').src : document.getElementById('thumb-back').src;
+            
+            // Apply placement
+            const placementSelect = document.querySelector(`select[name="${side}_placement"]`);
+            if (placementSelect) {
+                updatePlacement(placementSelect.value, side);
+            }
+            
             changeImage(mainImgSrc, side);
             
             // Visual feedback

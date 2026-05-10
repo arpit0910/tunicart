@@ -9,7 +9,7 @@ class OrderItem extends Model
 {
     protected $fillable = [
         'order_id', 'product_id', 'quantity', 'price', 'variant_details', 
-        'front_image', 'back_image', 'customization_notes'
+        'front_image', 'back_image', 'front_placement', 'back_placement', 'customization_notes'
     ];
     public function product()
     {

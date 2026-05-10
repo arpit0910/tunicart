@@ -101,8 +101,12 @@
             }
 
             let images = '';
-            if(item.front_image) images += `<a href="/storage/${item.front_image}" target="_blank" style="font-size:0.7rem; color:blue;">Front View</a> `;
-            if(item.back_image) images += `<a href="/storage/${item.back_image}" target="_blank" style="font-size:0.7rem; color:blue;">Back View</a>`;
+            if(item.front_image) {
+                images += `<div style="margin-bottom:5px;"><a href="/storage/${item.front_image}" target="_blank" style="font-size:0.8rem; color:var(--primary-color); font-weight:700;"><i class="fa-solid fa-image"></i> Front Design (${item.front_placement || 'center'})</a></div>`;
+            }
+            if(item.back_image) {
+                images += `<div><a href="/storage/${item.back_image}" target="_blank" style="font-size:0.8rem; color:var(--primary-color); font-weight:700;"><i class="fa-solid fa-image"></i> Back Design (${item.back_placement || 'center'})</a></div>`;
+            }
 
             itemsHtml += `
                 <tr style="border-bottom:1px solid #eee;">
@@ -113,8 +117,8 @@
                     <td style="padding:15px">₹${item.price}</td>
                     <td style="padding:15px">${item.quantity}</td>
                     <td style="padding:15px">
-                        ${images}<br>
-                        <small>${item.customization_notes || 'No notes'}</small>
+                        ${images}
+                        <div style="margin-top:10px; font-style:italic; color:#666;">${item.customization_notes || 'No notes'}</div>
                     </td>
                 </tr>
             `;

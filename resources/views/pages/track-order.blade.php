@@ -70,12 +70,16 @@
                                         @endif
 
                                         @if($item->front_image || $item->back_image)
-                                            <div style="display: flex; gap: 10px; margin-top: 10px;">
+                                            <div style="display: flex; gap: 15px; margin-top: 15px; flex-wrap: wrap;">
                                                 @if($item->front_image)
-                                                    <a href="{{ asset('storage/'.$item->front_image) }}" target="_blank" style="font-size: 0.7rem; color: var(--primary-color);">[Front Design]</a>
+                                                    <a href="{{ asset('storage/'.$item->front_image) }}" target="_blank" style="font-size: 0.75rem; color: var(--primary-color); font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 5px;">
+                                                        <i class="fa-solid fa-image"></i> Front: {{ ucfirst($item->front_placement ?? 'center') }}
+                                                    </a>
                                                 @endif
                                                 @if($item->back_image)
-                                                    <a href="{{ asset('storage/'.$item->back_image) }}" target="_blank" style="font-size: 0.7rem; color: var(--primary-color);">[Back Design]</a>
+                                                    <a href="{{ asset('storage/'.$item->back_image) }}" target="_blank" style="font-size: 0.75rem; color: var(--primary-color); font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 5px;">
+                                                        <i class="fa-solid fa-image"></i> Back: {{ ucfirst($item->back_placement ?? 'center') }}
+                                                    </a>
                                                 @endif
                                             </div>
                                         @endif

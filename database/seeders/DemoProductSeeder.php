@@ -31,7 +31,13 @@ class DemoProductSeeder extends Seeder
             'back_image' => 'products/black_tshirt_back.png',
             'is_featured' => true
         ]);
-        $p1->attributeValues()->sync(AttributeValue::whereIn('value', ['S', 'M', 'L', 'XL', 'Black'])->pluck('id'));
+        // Sync Sizes
+        $p1->attributeValues()->syncWithoutDetaching(AttributeValue::whereIn('value', ['S', 'M', 'L', 'XL'])->pluck('id'));
+        // Sync Color with images
+        $blackVal = AttributeValue::where('value', 'Black')->first();
+        if ($blackVal) {
+            $p1->attributeValues()->syncWithoutDetaching([$blackVal->id => ['image' => 'products/black_tshirt.png', 'back_image' => 'products/black_tshirt_back.png']]);
+        }
 
         $p2 = Product::updateOrCreate(['slug' => 'custom-white-tee'], [
             'name' => 'Custom White Tee',
@@ -42,7 +48,13 @@ class DemoProductSeeder extends Seeder
             'back_image' => 'products/white_tshirt_back.png',
             'is_featured' => true
         ]);
-        $p2->attributeValues()->sync(AttributeValue::whereIn('value', ['S', 'M', 'L', 'XL', 'White'])->pluck('id'));
+        // Sync Sizes
+        $p2->attributeValues()->syncWithoutDetaching(AttributeValue::whereIn('value', ['S', 'M', 'L', 'XL'])->pluck('id'));
+        // Sync Color with images
+        $whiteVal = AttributeValue::where('value', 'White')->first();
+        if ($whiteVal) {
+            $p2->attributeValues()->syncWithoutDetaching([$whiteVal->id => ['image' => 'products/white_tshirt.png', 'back_image' => 'products/white_tshirt_back.png']]);
+        }
 
         $p3 = Product::updateOrCreate(['slug' => 'classic-navy-polo'], [
             'name' => 'Classic Navy Polo',
@@ -53,7 +65,13 @@ class DemoProductSeeder extends Seeder
             'back_image' => 'products/navy_polo_back.png',
             'is_featured' => true
         ]);
-        $p3->attributeValues()->sync(AttributeValue::whereIn('value', ['M', 'L', 'XL', 'Navy Blue'])->pluck('id'));
+        // Sync Sizes
+        $p3->attributeValues()->syncWithoutDetaching(AttributeValue::whereIn('value', ['M', 'L', 'XL'])->pluck('id'));
+        // Sync Color with images
+        $navyVal = AttributeValue::where('value', 'Navy Blue')->first();
+        if ($navyVal) {
+            $p3->attributeValues()->syncWithoutDetaching([$navyVal->id => ['image' => 'products/navy_polo.png', 'back_image' => 'products/navy_polo_back.png']]);
+        }
 
         // FAQs
         \App\Models\Faq::updateOrCreate(['question' => 'How do I upload my own design?'], [

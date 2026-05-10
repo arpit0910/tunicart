@@ -124,6 +124,8 @@ class CheckoutController extends Controller
                 'variant_details' => isset($item['variants']) ? json_encode($item['variants']) : null,
                 'front_image' => $item['front_image'] ?? null,
                 'back_image' => $item['back_image'] ?? null,
+                'front_placement' => $item['front_placement'] ?? null,
+                'back_placement' => $item['back_placement'] ?? null,
                 'customization_notes' => $item['notes'] ?? null
             ]);
         }
