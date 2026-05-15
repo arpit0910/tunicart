@@ -104,8 +104,14 @@
             if(item.front_image) {
                 images += `<div style="margin-bottom:5px;"><a href="/storage/${item.front_image}" target="_blank" style="font-size:0.8rem; color:var(--primary-color); font-weight:700;"><i class="fa-solid fa-image"></i> Front Design (${item.front_placement || 'center'})</a></div>`;
             }
+            if(item.front_mockup) {
+                images += `<div style="margin-bottom:5px;"><a href="/storage/${item.front_mockup}" target="_blank" style="font-size:0.8rem; color:var(--secondary-color); font-weight:700;"><i class="fa-solid fa-shirt"></i> Front Mockup View</a></div>`;
+            }
             if(item.back_image) {
-                images += `<div><a href="/storage/${item.back_image}" target="_blank" style="font-size:0.8rem; color:var(--primary-color); font-weight:700;"><i class="fa-solid fa-image"></i> Back Design (${item.back_placement || 'center'})</a></div>`;
+                images += `<div style="margin-bottom:5px;"><a href="/storage/${item.back_image}" target="_blank" style="font-size:0.8rem; color:var(--primary-color); font-weight:700;"><i class="fa-solid fa-image"></i> Back Design (${item.back_placement || 'center'})</a></div>`;
+            }
+            if(item.back_mockup) {
+                images += `<div><a href="/storage/${item.back_mockup}" target="_blank" style="font-size:0.8rem; color:var(--secondary-color); font-weight:700;"><i class="fa-solid fa-shirt"></i> Back Mockup View</a></div>`;
             }
 
             itemsHtml += `

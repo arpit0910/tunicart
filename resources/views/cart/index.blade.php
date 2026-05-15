@@ -34,7 +34,7 @@
                                         <td style="padding: 20px;">
                                             <div style="display: flex; gap: 20px; align-items: center;">
                                                 <div style="position: relative;">
-                                                    <img src="{{ asset('storage/' . $details['image']) }}" style="width: 80px; height: 100px; object-fit: cover; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+                                                    <img src="{{ $details['front_mockup'] ? asset('storage/' . $details['front_mockup']) : asset('storage/' . $details['image']) }}" style="width: 80px; height: 100px; object-fit: cover; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
                                                     @if($details['front_image'] || $details['back_image'])
                                                         <span style="position: absolute; -top: 10px; -left: 10px; font-size: 0.6rem; background: var(--primary-color); color: #fff; padding: 3px 8px; border-radius: 50px; font-weight: 900; text-transform: uppercase; border: 2px solid var(--bg-color);">Custom</span>
                                                     @endif

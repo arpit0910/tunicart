@@ -55,7 +55,7 @@
                         @foreach($cart as $id => $item)
                             <div style="display: flex; justify-content: space-between; margin-bottom: 20px; align-items: center;">
                                 <div style="display: flex; gap: 15px; align-items: center;">
-                                    <img src="{{ asset('storage/' . $item['image']) }}" style="width: 50px; height: 60px; object-fit: cover; border-radius: 8px;">
+                                    <img src="{{ $item['front_mockup'] ? asset('storage/' . $item['front_mockup']) : asset('storage/' . $item['image']) }}" style="width: 50px; height: 60px; object-fit: cover; border-radius: 8px;">
                                     <div>
                                         <div style="font-weight: 700; font-size: 0.95rem; color: var(--black);">{{ $item['name'] }}</div>
                                         <div style="font-size: 0.8rem; color: var(--text-light);">Qty: {{ $item['quantity'] }}</div>

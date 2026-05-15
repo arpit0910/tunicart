@@ -25,7 +25,7 @@
                         <li><a href="#" style="display: flex; align-items: center; gap: 10px; color: var(--text-light);">
                             <i class="fa-solid fa-user-gear"></i> Profile Settings
                         </a></li>
-                        <li><a href="#" style="display: flex; align-items: center; gap: 10px; color: var(--text-light);">
+                        <li><a href="{{ route('dashboard.designs') }}" style="display: flex; align-items: center; gap: 10px; color: var(--text-light); transition: var(--transition);">
                             <i class="fa-solid fa-palette"></i> Custom Designs
                         </a></li>
                         <li style="margin-top: 10px; padding-top: 20px; border-top: 1px solid var(--glass-border);">

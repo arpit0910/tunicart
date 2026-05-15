@@ -129,5 +129,6 @@ Route::middleware('auth')->group(function () {
 use App\Http\Controllers\DashboardController;
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
+Route::get('/dashboard/designs', [DashboardController::class, 'designs'])->middleware(['auth'])->name('dashboard.designs');
 
 require __DIR__.'/auth.php';

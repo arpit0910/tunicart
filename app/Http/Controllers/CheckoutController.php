@@ -126,6 +126,12 @@ class CheckoutController extends Controller
                 'back_image' => $item['back_image'] ?? null,
                 'front_placement' => $item['front_placement'] ?? null,
                 'back_placement' => $item['back_placement'] ?? null,
+                'front_pos_top' => $item['front_pos_top'] ?? null,
+                'front_pos_left' => $item['front_pos_left'] ?? null,
+                'back_pos_top' => $item['back_pos_top'] ?? null,
+                'back_pos_left' => $item['back_pos_left'] ?? null,
+                'front_mockup' => $item['front_mockup'] ?? null,
+                'back_mockup' => $item['back_mockup'] ?? null,
                 'customization_notes' => $item['notes'] ?? null
             ]);
         }

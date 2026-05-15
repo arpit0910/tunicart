@@ -53,7 +53,7 @@
                         <div style="display: flex; flex-direction: column; gap: 20px;">
                             @foreach($order->items as $item)
                                 <div style="display: flex; gap: 20px; background: #fff; padding: 20px; border-radius: 20px; border: 1px solid var(--glass-border); box-shadow: var(--shadow);">
-                                    <img src="{{ asset('storage/'.$item->product->image) }}" style="width: 80px; height: 100px; border-radius: 12px; object-fit: cover; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                                    <img src="{{ $item->front_mockup ? asset('storage/'.$item->front_mockup) : asset('storage/'.$item->product->image) }}" style="width: 80px; height: 100px; border-radius: 12px; object-fit: cover; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
                                     <div style="flex: 1;">
                                         <div style="font-weight: 900; font-size: 1.1rem; color: var(--black);">{{ $item->product->name }}</div>
                                         <div style="font-size: 0.9rem; color: var(--text-light); margin-top: 4px; font-weight: 600;">Qty: <span style="color: var(--black);">{{ $item->quantity }}</span> • Value: <span style="color: var(--black);">₹{{ $item->price }}</span></div>
@@ -79,6 +79,16 @@
                                                 @if($item->back_image)
                                                     <a href="{{ asset('storage/'.$item->back_image) }}" target="_blank" style="font-size: 0.75rem; color: var(--primary-color); font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 5px;">
                                                         <i class="fa-solid fa-image"></i> Back: {{ ucfirst($item->back_placement ?? 'center') }}
+                                                    </a>
+                                                @endif
+                                                @if($item->front_mockup)
+                                                    <a href="{{ asset('storage/'.$item->front_mockup) }}" target="_blank" style="font-size: 0.75rem; color: var(--secondary-color); font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 5px;">
+                                                        <i class="fa-solid fa-shirt"></i> Front Mockup View
+                                                    </a>
+                                                @endif
+                                                @if($item->back_mockup)
+                                                    <a href="{{ asset('storage/'.$item->back_mockup) }}" target="_blank" style="font-size: 0.75rem; color: var(--secondary-color); font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 5px;">
+                                                        <i class="fa-solid fa-shirt"></i> Back Mockup View
                                                     </a>
                                                 @endif
                                             </div>

@@ -33,4 +33,15 @@ class DashboardController extends Controller
             'stats' => $stats
         ]);
     }
+
+    public function designs()
+    {
+        $designs = \App\Models\OrderItem::whereHas('order', function($q) {
+            $q->where('user_id', auth()->id());
+        })->where(function($q) {
+            $q->whereNotNull('front_mockup')->orWhereNotNull('back_mockup');
+        })->with('product')->latest()->get();
+
+        return view('pages.custom-designs', compact('designs'));
+    }
 }
