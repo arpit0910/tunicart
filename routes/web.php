@@ -41,39 +41,55 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     
     // Categories
     Route::get('/categories', [AdminController::class, 'categories'])->name('admin.categories');
+    Route::get('/categories/create', [AdminController::class, 'categoryCreate'])->name('admin.categories.create');
+    Route::get('/categories/edit/{id}', [AdminController::class, 'categoryEdit'])->name('admin.categories.edit');
     Route::post('/categories/store', [AdminController::class, 'categoryStore'])->name('admin.categories.store');
     Route::post('/categories/update/{id}', [AdminController::class, 'categoryUpdate'])->name('admin.categories.update');
     Route::post('/categories/delete/{id}', [AdminController::class, 'categoryDelete'])->name('admin.categories.delete');
     
     // Products
     Route::get('/products', [AdminController::class, 'products'])->name('admin.products');
+    Route::get('/products/create', [AdminController::class, 'productCreate'])->name('admin.products.create');
+    Route::get('/products/edit/{id}', [AdminController::class, 'productEdit'])->name('admin.products.edit');
     Route::post('/products/store', [AdminController::class, 'productStore'])->name('admin.products.store');
     Route::post('/products/update/{id}', [AdminController::class, 'productUpdate'])->name('admin.products.update');
     Route::post('/products/delete/{id}', [AdminController::class, 'productDelete'])->name('admin.products.delete');
     
     // Banners
     Route::get('/banners', [AdminController::class, 'banners'])->name('admin.banners');
+    Route::get('/banners/create', [AdminController::class, 'bannerCreate'])->name('admin.banners.create');
+    Route::get('/banners/edit/{id}', [AdminController::class, 'bannerEdit'])->name('admin.banners.edit');
     Route::post('/banners/store', [AdminController::class, 'bannerStore'])->name('admin.banners.store');
     Route::post('/banners/update/{id}', [AdminController::class, 'bannerUpdate'])->name('admin.banners.update');
     Route::post('/banners/delete/{id}', [AdminController::class, 'bannerDelete'])->name('admin.banners.delete');
     
     // Testimonials
     Route::get('/testimonials', [AdminController::class, 'testimonials'])->name('admin.testimonials');
+    Route::get('/testimonials/create', [AdminController::class, 'testimonialCreate'])->name('admin.testimonials.create');
+    Route::get('/testimonials/edit/{id}', [AdminController::class, 'testimonialEdit'])->name('admin.testimonials.edit');
     Route::post('/testimonials/store', [AdminController::class, 'testimonialStore'])->name('admin.testimonials.store');
     Route::post('/testimonials/update/{id}', [AdminController::class, 'testimonialUpdate'])->name('admin.testimonials.update');
     Route::post('/testimonials/delete/{id}', [AdminController::class, 'testimonialDelete'])->name('admin.testimonials.delete');
     
     // FAQs
     Route::get('/faqs', [AdminController::class, 'faqs'])->name('admin.faqs');
+    Route::get('/faqs/create', [AdminController::class, 'faqCreate'])->name('admin.faqs.create');
+    Route::get('/faqs/edit/{id}', [AdminController::class, 'faqEdit'])->name('admin.faqs.edit');
     Route::post('/faqs/store', [AdminController::class, 'faqStore'])->name('admin.faqs.store');
     Route::post('/faqs/update/{id}', [AdminController::class, 'faqUpdate'])->name('admin.faqs.update');
     Route::post('/faqs/delete/{id}', [AdminController::class, 'faqDelete'])->name('admin.faqs.delete');
     
     // Coupons
     Route::get('/coupons', [AdminController::class, 'coupons'])->name('admin.coupons');
+    Route::get('/coupons/create', [AdminController::class, 'couponCreate'])->name('admin.coupons.create');
+    Route::get('/coupons/edit/{id}', [AdminController::class, 'couponEdit'])->name('admin.coupons.edit');
     Route::post('/coupons/store', [AdminController::class, 'couponStore'])->name('admin.coupons.store');
     Route::post('/coupons/update/{id}', [AdminController::class, 'couponUpdate'])->name('admin.coupons.update');
     Route::post('/coupons/delete/{id}', [AdminController::class, 'couponDelete'])->name('admin.coupons.delete');
+
+    // Payment Settings
+    Route::get('/payment-settings', [AdminController::class, 'paymentSettings'])->name('admin.payment-settings');
+    Route::post('/payment-settings/update', [AdminController::class, 'paymentSettingsUpdate'])->name('admin.payment-settings.update');
     
     // Subscribers
     Route::get('/subscribers', [AdminController::class, 'subscribers'])->name('admin.subscribers');
@@ -85,6 +101,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     
     // Attributes
     Route::get('/attributes', [AdminController::class, 'attributes'])->name('admin.attributes');
+    Route::get('/attributes/create', [AdminController::class, 'attributeCreate'])->name('admin.attributes.create');
+    Route::get('/attributes/values/create/{attribute_id}', [AdminController::class, 'attributeValueCreate'])->name('admin.attributes.values.create');
     Route::post('/attributes/store', [AdminController::class, 'attributeStore'])->name('admin.attributes.store');
     Route::post('/attributes/values/store', [AdminController::class, 'attributeValueStore'])->name('admin.attributes.values.store');
     

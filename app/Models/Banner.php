@@ -19,6 +19,9 @@ class Banner extends Model
         'button_text',
         'link',
         'text_color',
-        'display_on'
+        'display_on',
+        'vertical_position',
+        'horizontal_position',
+        'text_align'
     ];
 }

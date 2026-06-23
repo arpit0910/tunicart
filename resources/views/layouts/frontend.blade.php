@@ -101,7 +101,7 @@
             <i class="fa-solid fa-heart"></i>
             <span>Wishlist</span>
         </a>
-        <a href="{{ route('dashboard') }}">
+        <a href="{{ auth()->check() && auth()->user()->is_admin ? route('admin.dashboard') : route('dashboard') }}">
             <i class="fa-solid fa-user"></i>
             <span>Account</span>
         </a>

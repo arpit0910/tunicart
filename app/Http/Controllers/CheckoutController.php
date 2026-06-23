@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\Coupon;
+use App\Models\PaymentSetting;
 use Illuminate\Http\Request;
 
 class CheckoutController extends Controller
@@ -75,7 +76,17 @@ class CheckoutController extends Controller
         }
         $grand_total = $total - $discount;
 
-        return view('checkout.payment', compact('grand_total'));
+        $settings = PaymentSetting::firstOrCreate([
+            'id' => 1
+        ], [
+            'upi_id' => 'tunicart@upi',
+            'bank_name' => 'State Bank of India',
+            'account_holder' => 'Tunicart Apparel India',
+            'account_number' => '1234567890',
+            'ifsc_code' => 'SBIN0001234'
+        ]);
+
+        return view('checkout.payment', compact('grand_total', 'settings'));
     }
 
     public function placeOrder(Request $request)

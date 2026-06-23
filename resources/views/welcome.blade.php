@@ -9,9 +9,9 @@
             @forelse($banners as $banner)
                 <div class="slider-slide {{ $banner->display_on === 'web' ? 'web-only' : ($banner->display_on === 'mobile' ? 'mobile-only' : '') }}" style="flex: 0 0 100%; height: 100%; position: relative;">
                     <div class="hero bg-pattern"
-                        style="background-image: url('{{ Str::startsWith($banner->image, 'http') ? $banner->image : asset('storage/' . $banner->image) }}'); background-size: cover; background-position: center; height: 100%; display: flex; align-items: center;">
-                        <div class="container">
-                            <div class="hero-content" style="max-width: 600px; color: {{ $banner->text_color ?? 'var(--black)' }};">
+                        style="background-image: url('{{ Str::startsWith($banner->image, 'http') ? $banner->image : asset('storage/' . $banner->image) }}'); background-size: cover; background-position: center; height: 100%; display: flex; align-items: {{ $banner->vertical_position ?? 'center' }};">
+                        <div class="container" style="display: flex; flex-direction: column; width: 100%; align-items: {{ $banner->horizontal_position ?? 'flex-start' }};">
+                            <div class="hero-content" style="max-width: 600px; text-align: {{ $banner->text_align ?? 'left' }}; color: {{ $banner->text_color ?? 'var(--black)' }};">
                                 <span style="display: inline-block; padding: 6px 15px; background: rgba(var(--primary-rgb), 0.1); border: 1px solid {{ $banner->text_color ?? 'var(--primary-color)' }}; color: {{ $banner->text_color ?? 'var(--primary-color)' }}; border-radius: 50px; font-weight: 700; font-size: 0.8rem; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px;">
                                     {{ $banner->sub_title }}
                                 </span>
@@ -21,7 +21,7 @@
                                 <p style="font-size: 1.1rem; margin-bottom: 30px; opacity: 0.9; color: {{ $banner->text_color ?? 'var(--text-light)' }}; font-weight: 600;">
                                     {{ $banner->description }}
                                 </p>
-                                <div style="display: flex; gap: 20px;">
+                                <div style="display: flex; gap: 20px; justify-content: {{ ($banner->text_align ?? 'left') === 'center' ? 'center' : (($banner->text_align ?? 'left') === 'right' ? 'flex-end' : 'flex-start') }};">
                                     <a href="{{ $banner->link ?? route('products.index') }}" class="btn btn-primary" style="padding: 15px 35px; background: {{ $banner->text_color == '#ffffff' ? 'var(--accent-color)' : 'linear-gradient(135deg, var(--primary-color), var(--secondary-color))' }}; color: {{ $banner->text_color == '#ffffff' ? 'var(--primary-color)' : '#fff' }}; box-shadow: 0 10px 30px var(--accent-glow);">{{ $banner->button_text ?? 'Explore Now' }}</a>
                                 </div>
                             </div>

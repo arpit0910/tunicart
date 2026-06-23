@@ -10,11 +10,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body { background: #f8f9fa; display: flex; min-height: 100vh; font-family: 'Outfit', sans-serif; color: var(--black); }
-        .sidebar { width: 280px; background: var(--primary-color); color: #fff; padding: 40px 0; display: flex; flex-direction: column; position: sticky; top: 0; height: 100vh; box-shadow: 10px 0 30px rgba(0,0,0,0.1); }
-        .sidebar-brand { padding: 0 40px 40px; font-size: 1.8rem; font-weight: 800; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 30px; letter-spacing: -1px; color: var(--accent-color); }
-        .sidebar-menu { list-style: none; flex: 1; overflow-y: auto; padding-bottom: 40px; -ms-overflow-style: none; scrollbar-width: none; }
+        .sidebar { width: 280px; background: var(--primary-color); color: #fff; padding: 25px 0; display: flex; flex-direction: column; position: sticky; top: 0; height: 100vh; box-shadow: 10px 0 30px rgba(0,0,0,0.1); }
+        .sidebar-brand { padding: 0 30px 20px; font-size: 1.8rem; font-weight: 800; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px; letter-spacing: -1px; color: var(--accent-color); }
+        .sidebar-menu { list-style: none; flex: 1; overflow-y: auto; padding-bottom: 25px; -ms-overflow-style: none; scrollbar-width: none; }
         .sidebar-menu::-webkit-scrollbar { display: none; }
-        .sidebar-menu li a { display: flex; align-items: center; gap: 15px; padding: 16px 40px; color: rgba(255,255,255,0.6); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); font-weight: 600; text-decoration: none; border-left: 4px solid transparent; }
+        .sidebar-menu li a { display: flex; align-items: center; gap: 12px; padding: 11px 30px; color: rgba(255,255,255,0.6); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); font-weight: 600; text-decoration: none; border-left: 4px solid transparent; }
         .sidebar-menu li a:hover { color: #fff; background: rgba(255,255,255,0.03); }
         .sidebar-menu li a.active { background: rgba(212, 175, 55, 0.08); color: var(--accent-color); border-left-color: var(--accent-color); font-weight: 800; }
         .main-content { flex: 1; padding: 50px; overflow-y: auto; background: #fff; }
@@ -34,27 +34,48 @@
     <div class="sidebar">
         <div class="sidebar-brand">Tunicart Admin</div>
         <ul class="sidebar-menu">
-            <li><a href="{{ route('admin.dashboard') }}" class="{{ Route::is('admin.dashboard') ? 'active' : '' }}"><i class="fa-solid fa-gauge"></i> Dashboard</a></li>
-            <li><a href="{{ route('admin.categories') }}" class="{{ Route::is('admin.categories') ? 'active' : '' }}"><i class="fa-solid fa-list"></i> Categories</a></li>
-            <li><a href="{{ route('admin.products') }}" class="{{ Route::is('admin.products') ? 'active' : '' }}"><i class="fa-solid fa-shirt"></i> Products</a></li>
-            <li><a href="{{ route('admin.attributes') }}" class="{{ Route::is('admin.attributes') ? 'active' : '' }}"><i class="fa-solid fa-tags"></i> Product Attributes</a></li>
-            <li><a href="{{ route('admin.banners') }}" class="{{ Route::is('admin.banners') ? 'active' : '' }}"><i class="fa-solid fa-image"></i> Banners</a></li>
-            <li><a href="{{ route('admin.orders') }}" class="{{ Route::is('admin.orders') ? 'active' : '' }}"><i class="fa-solid fa-truck"></i> Manage Orders</a></li>
-            <li><a href="{{ route('admin.customers') }}" class="{{ Route::is('admin.customers') ? 'active' : '' }}"><i class="fa-solid fa-user-group"></i> Customers</a></li>
-            <li><a href="{{ route('admin.reviews') }}" class="{{ Route::is('admin.reviews') ? 'active' : '' }}"><i class="fa-solid fa-star-half-stroke"></i> Reviews</a></li>
-            <li><a href="{{ route('admin.coupons') }}" class="{{ Route::is('admin.coupons') ? 'active' : '' }}"><i class="fa-solid fa-ticket"></i> Coupons</a></li>
-            <li><a href="{{ route('admin.faqs') }}" class="{{ Route::is('admin.faqs') ? 'active' : '' }}"><i class="fa-solid fa-circle-question"></i> FAQs</a></li>
-            <li><a href="{{ route('admin.testimonials') }}" class="{{ Route::is('admin.testimonials') ? 'active' : '' }}"><i class="fa-solid fa-comment-dots"></i> Testimonials</a></li>
-            <li><a href="{{ route('admin.subscribers') }}" class="{{ Route::is('admin.subscribers') ? 'active' : '' }}"><i class="fa-solid fa-users-line"></i> Mailing List</a></li>
-            <li><a href="{{ route('admin.queries') }}" class="{{ Route::is('admin.queries') ? 'active' : '' }}"><i class="fa-solid fa-envelope-open-text"></i> User Queries</a></li>
+            <li><a href="{{ route('admin.dashboard') }}" class="{{ Route::is('admin.dashboard*') ? 'active' : '' }}"><i class="fa-solid fa-gauge"></i> Dashboard</a></li>
+            <li><a href="{{ route('admin.categories') }}" class="{{ Route::is('admin.categories*') ? 'active' : '' }}"><i class="fa-solid fa-list"></i> Categories</a></li>
+            <li><a href="{{ route('admin.products') }}" class="{{ Route::is('admin.products*') ? 'active' : '' }}"><i class="fa-solid fa-shirt"></i> Products</a></li>
+            <li><a href="{{ route('admin.attributes') }}" class="{{ Route::is('admin.attributes*') ? 'active' : '' }}"><i class="fa-solid fa-tags"></i> Product Attributes</a></li>
+            <li><a href="{{ route('admin.banners') }}" class="{{ Route::is('admin.banners*') ? 'active' : '' }}"><i class="fa-solid fa-image"></i> Banners</a></li>
+            <li><a href="{{ route('admin.orders') }}" class="{{ Route::is('admin.orders*') ? 'active' : '' }}"><i class="fa-solid fa-truck"></i> Manage Orders</a></li>
+            <li><a href="{{ route('admin.customers') }}" class="{{ Route::is('admin.customers*') ? 'active' : '' }}"><i class="fa-solid fa-user-group"></i> Customers</a></li>
+            <li><a href="{{ route('admin.reviews') }}" class="{{ Route::is('admin.reviews*') ? 'active' : '' }}"><i class="fa-solid fa-star-half-stroke"></i> Reviews</a></li>
+            <li><a href="{{ route('admin.coupons') }}" class="{{ Route::is('admin.coupons*') ? 'active' : '' }}"><i class="fa-solid fa-ticket"></i> Coupons</a></li>
+            <li><a href="{{ route('admin.payment-settings') }}" class="{{ Route::is('admin.payment-settings*') ? 'active' : '' }}"><i class="fa-solid fa-credit-card"></i> Payment Settings</a></li>
+            <li><a href="{{ route('admin.faqs') }}" class="{{ Route::is('admin.faqs*') ? 'active' : '' }}"><i class="fa-solid fa-circle-question"></i> FAQs</a></li>
+            <li><a href="{{ route('admin.testimonials') }}" class="{{ Route::is('admin.testimonials*') ? 'active' : '' }}"><i class="fa-solid fa-comment-dots"></i> Testimonials</a></li>
+            <li><a href="{{ route('admin.subscribers') }}" class="{{ Route::is('admin.subscribers*') ? 'active' : '' }}"><i class="fa-solid fa-users-line"></i> Mailing List</a></li>
+            <li><a href="{{ route('admin.queries') }}" class="{{ Route::is('admin.queries*') ? 'active' : '' }}"><i class="fa-solid fa-envelope-open-text"></i> User Queries</a></li>
             <li><a href="{{ url('/') }}"><i class="fa-solid fa-eye"></i> View Website</a></li>
         </ul>
     </div>
     
     <div class="main-content">
         @if(session('success'))
-            <div style="background: #d4edda; color: #155724; padding: 15px; border-radius: 10px; margin-bottom: 30px;">
-                {{ session('success') }}
+            <div class="alert alert-success" style="background: #d4edda; color: #155724; padding: 15px 20px; border-radius: 10px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #c3e6cb; box-shadow: 0 4px 12px rgba(0,0,0,0.05); font-weight: 600; font-family: inherit;">
+                <div><i class="fa-solid fa-circle-check" style="margin-right: 10px; color: #28a745;"></i> {{ session('success') }}</div>
+                <button onclick="this.parentElement.remove()" style="background: none; border: none; color: #155724; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0; line-height: 1; transition: 0.2s; opacity: 0.7;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="alert alert-danger" style="background: #f8d7da; color: #721c24; padding: 15px 20px; border-radius: 10px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #f5c6cb; box-shadow: 0 4px 12px rgba(0,0,0,0.05); font-weight: 600; font-family: inherit;">
+                <div><i class="fa-solid fa-triangle-exclamation" style="margin-right: 10px; color: #dc3545;"></i> {{ session('error') }}</div>
+                <button onclick="this.parentElement.remove()" style="background: none; border: none; color: #721c24; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0; line-height: 1; transition: 0.2s; opacity: 0.7;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+        @endif
+
+        @if($errors->any())
+            <div class="alert alert-danger" style="background: #f8d7da; color: #721c24; padding: 15px 20px; border-radius: 10px; margin-bottom: 30px; border: 1px solid #f5c6cb; box-shadow: 0 4px 12px rgba(0,0,0,0.05); font-weight: 600; position: relative; font-family: inherit;">
+                <button onclick="this.parentElement.remove()" style="position: absolute; top: 15px; right: 20px; background: none; border: none; color: #721c24; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0; line-height: 1; transition: 0.2s; opacity: 0.7;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'"><i class="fa-solid fa-xmark"></i></button>
+                <div style="margin-bottom: 10px;"><i class="fa-solid fa-triangle-exclamation" style="margin-right: 10px; color: #dc3545;"></i> <strong>Please correct the following errors:</strong></div>
+                <ul style="margin: 0; padding-left: 20px; font-size: 0.9rem; line-height: 1.5; list-style-type: disc; color: #721c24;">
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
             </div>
         @endif
         

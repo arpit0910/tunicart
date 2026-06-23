@@ -12,6 +12,7 @@ use App\Models\Testimonial;
 use App\Models\Faq;
 use App\Models\Coupon;
 use App\Models\Subscriber;
+use App\Models\PaymentSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -42,6 +43,17 @@ class AdminController extends Controller
         return view('admin.categories', compact('categories'));
     }
 
+    public function categoryCreate()
+    {
+        return view('admin.categories_create');
+    }
+
+    public function categoryEdit($id)
+    {
+        $category = Category::findOrFail($id);
+        return view('admin.categories_edit', compact('category'));
+    }
+
     public function categoryStore(Request $request)
     {
         $request->validate(['name' => 'required']);
@@ -50,7 +62,7 @@ class AdminController extends Controller
             'slug' => \Illuminate\Support\Str::slug($request->name),
             'image' => $request->file('image') ? $request->file('image')->store('categories', 'public') : null,
         ]);
-        return redirect()->back()->with('success', 'Category created successfully');
+        return redirect()->route('admin.categories')->with('success', 'Category created successfully');
     }
 
     public function categoryUpdate(Request $request, $id)
@@ -65,7 +77,7 @@ class AdminController extends Controller
             $data['image'] = $request->file('image')->store('categories', 'public');
         }
         $category->update($data);
-        return redirect()->back()->with('success', 'Category updated successfully');
+        return redirect()->route('admin.categories')->with('success', 'Category updated successfully');
     }
 
     public function categoryDelete($id)
@@ -80,6 +92,21 @@ class AdminController extends Controller
         $categories = Category::all();
         $attributes = Attribute::with('values')->get();
         return view('admin.products', compact('products', 'categories', 'attributes'));
+    }
+
+    public function productCreate()
+    {
+        $categories = Category::all();
+        $attributes = Attribute::with('values')->get();
+        return view('admin.products_create', compact('categories', 'attributes'));
+    }
+
+    public function productEdit($id)
+    {
+        $product = Product::findOrFail($id);
+        $categories = Category::all();
+        $attributes = Attribute::with('values')->get();
+        return view('admin.products_edit', compact('product', 'categories', 'attributes'));
     }
 
     public function productStore(Request $request)
@@ -115,7 +142,7 @@ class AdminController extends Controller
             $product->attributeValues()->sync($syncData);
         }
 
-        return redirect()->back()->with('success', 'Product created successfully');
+        return redirect()->route('admin.products')->with('success', 'Product created successfully');
     }
 
     public function productUpdate(Request $request, $id)
@@ -168,7 +195,7 @@ class AdminController extends Controller
             $product->attributeValues()->detach();
         }
 
-        return redirect()->back()->with('success', 'Product updated successfully');
+        return redirect()->route('admin.products')->with('success', 'Product updated successfully');
     }
 
     public function productDelete($id)
@@ -183,6 +210,17 @@ class AdminController extends Controller
         return view('admin.banners', compact('banners'));
     }
 
+    public function bannerCreate()
+    {
+        return view('admin.banners_create');
+    }
+
+    public function bannerEdit($id)
+    {
+        $banner = Banner::findOrFail($id);
+        return view('admin.banners_edit', compact('banner'));
+    }
+
     public function bannerStore(Request $request)
     {
         $request->validate(['image' => 'required|image']);
@@ -195,8 +233,11 @@ class AdminController extends Controller
             'text_color' => $request->text_color ?? '#1E0E00',
             'display_on' => $request->display_on ?? 'both',
             'link' => $request->link,
+            'vertical_position' => $request->vertical_position ?? 'center',
+            'horizontal_position' => $request->horizontal_position ?? 'flex-start',
+            'text_align' => $request->text_align ?? 'left',
         ]);
-        return redirect()->back()->with('success', 'Banner created successfully');
+        return redirect()->route('admin.banners')->with('success', 'Banner created successfully');
     }
 
     public function bannerUpdate(Request $request, $id)
@@ -210,12 +251,15 @@ class AdminController extends Controller
             'text_color' => $request->text_color,
             'display_on' => $request->display_on,
             'link' => $request->link,
+            'vertical_position' => $request->vertical_position ?? 'center',
+            'horizontal_position' => $request->horizontal_position ?? 'flex-start',
+            'text_align' => $request->text_align ?? 'left',
         ];
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('banners', 'public');
         }
         $banner->update($data);
-        return redirect()->back()->with('success', 'Banner updated successfully');
+        return redirect()->route('admin.banners')->with('success', 'Banner updated successfully');
     }
 
     public function bannerDelete($id)
@@ -230,6 +274,17 @@ class AdminController extends Controller
         return view('admin.testimonials', compact('testimonials'));
     }
 
+    public function testimonialCreate()
+    {
+        return view('admin.testimonials_create');
+    }
+
+    public function testimonialEdit($id)
+    {
+        $testimonial = Testimonial::findOrFail($id);
+        return view('admin.testimonials_edit', compact('testimonial'));
+    }
+
     public function testimonialStore(Request $request)
     {
         $request->validate(['user_name' => 'required', 'content' => 'required']);
@@ -239,7 +294,7 @@ class AdminController extends Controller
             'rating' => $request->rating ?? 5,
             'image' => $request->file('image') ? $request->file('image')->store('testimonials', 'public') : null,
         ]);
-        return redirect()->back()->with('success', 'Testimonial added successfully');
+        return redirect()->route('admin.testimonials')->with('success', 'Testimonial added successfully');
     }
 
     public function testimonialUpdate(Request $request, $id)
@@ -254,7 +309,7 @@ class AdminController extends Controller
             $data['image'] = $request->file('image')->store('testimonials', 'public');
         }
         $testimonial->update($data);
-        return redirect()->back()->with('success', 'Testimonial updated successfully');
+        return redirect()->route('admin.testimonials')->with('success', 'Testimonial updated successfully');
     }
 
     public function testimonialDelete($id)
@@ -269,6 +324,54 @@ class AdminController extends Controller
         return view('admin.faqs', compact('faqs'));
     }
 
+    public function faqCreate()
+    {
+        return view('admin.faqs_create');
+    }
+
+    public function faqEdit($id)
+    {
+        $faq = Faq::findOrFail($id);
+        return view('admin.faqs_edit', compact('faq'));
+    }
+
+    public function faqStore(Request $request)
+    {
+        $request->validate(['question' => 'required', 'answer' => 'required']);
+        Faq::create($request->all());
+        return redirect()->route('admin.faqs')->with('success', 'FAQ added successfully');
+    }
+
+    public function faqUpdate(Request $request, $id)
+    {
+        $faq = Faq::findOrFail($id);
+        $faq->update($request->all());
+        return redirect()->route('admin.faqs')->with('success', 'FAQ updated successfully');
+    }
+
+    public function faqDelete($id)
+    {
+        Faq::findOrFail($id)->delete();
+        return redirect()->back()->with('success', 'FAQ deleted successfully');
+    }
+
+    public function coupons()
+    {
+        $coupons = Coupon::latest()->get();
+        return view('admin.coupons', compact('coupons'));
+    }
+
+    public function couponCreate()
+    {
+        return view('admin.coupons_create');
+    }
+
+    public function couponEdit($id)
+    {
+        $coupon = Coupon::findOrFail($id);
+        return view('admin.coupons_edit', compact('coupon'));
+    }
+
     public function couponStore(Request $request)
     {
         $request->validate([
@@ -279,20 +382,14 @@ class AdminController extends Controller
             'expiry_date' => 'nullable|date'
         ]);
         Coupon::create($request->all());
-        return redirect()->back()->with('success', 'Coupon created successfully');
-    }
-
-    public function coupons()
-    {
-        $coupons = Coupon::latest()->get();
-        return view('admin.coupons', compact('coupons'));
+        return redirect()->route('admin.coupons')->with('success', 'Coupon created successfully');
     }
 
     public function couponUpdate(Request $request, $id)
     {
         $coupon = Coupon::findOrFail($id);
         $coupon->update($request->all());
-        return redirect()->back()->with('success', 'Coupon updated successfully');
+        return redirect()->route('admin.coupons')->with('success', 'Coupon updated successfully');
     }
 
     public function couponDelete($id)
@@ -305,26 +402,6 @@ class AdminController extends Controller
     {
         $subscribers = Subscriber::latest()->get();
         return view('admin.subscribers', compact('subscribers'));
-    }
-
-    public function faqStore(Request $request)
-    {
-        $request->validate(['question' => 'required', 'answer' => 'required']);
-        Faq::create($request->all());
-        return redirect()->back()->with('success', 'FAQ added successfully');
-    }
-
-    public function faqUpdate(Request $request, $id)
-    {
-        $faq = Faq::findOrFail($id);
-        $faq->update($request->all());
-        return redirect()->back()->with('success', 'FAQ updated successfully');
-    }
-
-    public function faqDelete($id)
-    {
-        Faq::findOrFail($id)->delete();
-        return redirect()->back()->with('success', 'FAQ deleted successfully');
     }
 
     public function orders()
@@ -359,11 +436,22 @@ class AdminController extends Controller
         return view('admin.attributes', compact('attributes'));
     }
 
+    public function attributeCreate()
+    {
+        return view('admin.attributes_create');
+    }
+
+    public function attributeValueCreate($attribute_id)
+    {
+        $attribute = Attribute::findOrFail($attribute_id);
+        return view('admin.attribute_values_create', compact('attribute'));
+    }
+
     public function attributeStore(Request $request)
     {
         $request->validate(['name' => 'required']);
         Attribute::create(['name' => $request->name]);
-        return redirect()->back()->with('success', 'Attribute created successfully');
+        return redirect()->route('admin.attributes')->with('success', 'Attribute created successfully');
     }
 
     public function attributeValueStore(Request $request)
@@ -373,7 +461,7 @@ class AdminController extends Controller
             'value' => 'required'
         ]);
         AttributeValue::create($request->all());
-        return redirect()->back()->with('success', 'Attribute value added successfully');
+        return redirect()->route('admin.attributes')->with('success', 'Attribute value added successfully');
     }
 
     // Customers
@@ -417,5 +505,50 @@ class AdminController extends Controller
     {
         \App\Models\ContactQuery::findOrFail($id)->delete();
         return redirect()->back()->with('success', 'Query deleted successfully');
+    }
+
+    public function paymentSettings()
+    {
+        $settings = PaymentSetting::firstOrCreate([
+            'id' => 1
+        ], [
+            'upi_id' => 'tunicart@upi',
+            'bank_name' => 'State Bank of India',
+            'account_holder' => 'Tunicart Apparel India',
+            'account_number' => '1234567890',
+            'ifsc_code' => 'SBIN0001234'
+        ]);
+
+        return view('admin.payment_settings', compact('settings'));
+    }
+
+    public function paymentSettingsUpdate(Request $request)
+    {
+        $request->validate([
+            'upi_id' => 'nullable|string',
+            'upi_qr_code' => 'nullable|image|max:2048',
+            'bank_name' => 'nullable|string',
+            'account_holder' => 'nullable|string',
+            'account_number' => 'nullable|string',
+            'ifsc_code' => 'nullable|string',
+        ]);
+
+        $settings = PaymentSetting::firstOrCreate(['id' => 1]);
+
+        $data = [
+            'upi_id' => $request->upi_id,
+            'bank_name' => $request->bank_name,
+            'account_holder' => $request->account_holder,
+            'account_number' => $request->account_number,
+            'ifsc_code' => $request->ifsc_code,
+        ];
+
+        if ($request->hasFile('upi_qr_code')) {
+            $data['upi_qr_code'] = $request->file('upi_qr_code')->store('payments', 'public');
+        }
+
+        $settings->update($data);
+
+        return redirect()->route('admin.payment-settings')->with('success', 'Payment settings updated successfully');
     }
 }

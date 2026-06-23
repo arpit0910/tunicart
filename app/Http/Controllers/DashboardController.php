@@ -9,6 +9,10 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        if (auth()->check() && auth()->user()->is_admin) {
+            return redirect()->route('admin.dashboard');
+        }
+
         $orders = Order::where('user_id', auth()->id())
             ->with(['items.product'])
             ->latest()
@@ -36,6 +40,10 @@ class DashboardController extends Controller
 
     public function designs()
     {
+        if (auth()->check() && auth()->user()->is_admin) {
+            return redirect()->route('admin.dashboard');
+        }
+
         $designs = \App\Models\OrderItem::whereHas('order', function($q) {
             $q->where('user_id', auth()->id());
         })->where(function($q) {

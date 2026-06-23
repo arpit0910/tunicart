@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class AdminUserSeeder extends Seeder
@@ -13,16 +14,10 @@ class AdminUserSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::updateOrCreate(['email' => 'admin@tunicart.com'], [
+        User::updateOrCreate(['email' => 'admin@tunicart.in'], [
             'name' => 'Admin Tunicart',
-            'password' => \Hash::make('admin123'),
+            'password' => \Hash::make('Tunicart@123'),
             'is_admin' => true
-        ]);
-
-        \App\Models\User::updateOrCreate(['email' => 'customer@example.com'], [
-            'name' => 'John Doe',
-            'password' => \Hash::make('customer123'),
-            'is_admin' => false
         ]);
     }
 }
